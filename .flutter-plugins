@@ -1,4 +1,14 @@
 # This is a generated file; do not edit or check into version control.
+cloud_firestore=/home/santiago/.pub-cache/hosted/pub.dev/cloud_firestore-4.5.0/
+cloud_firestore_web=/home/santiago/.pub-cache/hosted/pub.dev/cloud_firestore_web-3.4.0/
+file_picker=/home/santiago/.pub-cache/hosted/pub.dev/file_picker-5.2.7/
+firebase_auth=/home/santiago/.pub-cache/hosted/pub.dev/firebase_auth-4.4.0/
+firebase_auth_web=/home/santiago/.pub-cache/hosted/pub.dev/firebase_auth_web-5.3.0/
+firebase_core=/home/santiago/.pub-cache/hosted/pub.dev/firebase_core-2.9.0/
+firebase_core_web=/home/santiago/.pub-cache/hosted/pub.dev/firebase_core_web-2.3.0/
+firebase_storage=/home/santiago/.pub-cache/hosted/pub.dev/firebase_storage-11.1.0/
+firebase_storage_web=/home/santiago/.pub-cache/hosted/pub.dev/firebase_storage_web-3.4.0/
+flutter_plugin_android_lifecycle=/home/santiago/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.9/
 path_provider=/home/santiago/.pub-cache/hosted/pub.dev/path_provider-2.0.14/
 path_provider_android=/home/santiago/.pub-cache/hosted/pub.dev/path_provider_android-2.0.24/
 path_provider_foundation=/home/santiago/.pub-cache/hosted/pub.dev/path_provider_foundation-2.2.1/
