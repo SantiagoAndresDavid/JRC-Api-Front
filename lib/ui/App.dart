@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:jrc_front/ui/pages/auth/login.dart';
+import 'package:jrc_front/ui/pages/home/home.dart';
 import 'package:jrc_front/ui/utils/colorTheme.dart';
 
 
@@ -28,11 +29,12 @@ class _AppState extends State<App> {
       theme: ColorTheme.whiteTheme,
       darkTheme: ColorTheme.darkTheme,
       themeMode: currentTheme.currentTheme,
+      //config routes to other class
       routes: {
         '/login': (context) => const Login(),
       },
       //TODO: change class login to other class 
-      home: const Login()
+      home: const home()
     );
   }
 }
