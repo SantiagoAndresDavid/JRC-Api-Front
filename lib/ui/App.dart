@@ -31,10 +31,11 @@ class _AppState extends State<App> {
       themeMode: currentTheme.currentTheme,
       //config routes to other class
       routes: {
+        '/home': (context) => const Home(),
         '/login': (context) => const Login(),
       },
       //TODO: change class login to other class 
-      home: const home()
+      home: const Home(),
     );
   }
 }

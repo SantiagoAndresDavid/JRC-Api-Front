@@ -1,54 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/dimensions.dart';
 
-class home extends StatefulWidget {
-  const home({super.key});
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<home> createState() => _homeState();
+  State<Home> createState() => _HomeState();
 }
 
-class _homeState extends State<home> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
       Positioned(
-          child: Container(
+        child: Container(
         width: double.maxFinite,
         height: Dimensions.height40,
         decoration: const BoxDecoration(
-            image: DecorationImage(
+          image: DecorationImage(
           image: AssetImage(
-              '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
-        )),
-      )),
+              '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'
+              ),
+            )
+          ),
+        )
+      ),
       const Align(
         alignment: Alignment.center,
       ),
       Positioned(
           width: Dimensions.screenWidth,
-          top: Dimensions.height60,
+          top: Dimensions.height65,
           height: Dimensions.height50,
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: Dimensions.width10,
               vertical: Dimensions.height5,
             ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
+            decoration: const BoxDecoration(
               color: Colors.black,
             ),
             child: Column(
               children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: Dimensions.screenHeight * 0.03),
-                    )),
                 Padding(
                   padding: EdgeInsets.only(bottom: Dimensions.height10),
                 ),
@@ -60,7 +57,7 @@ class _homeState extends State<home> {
                       //login button
                       ElevatedButton(
                         onPressed: () {
-                          //Get.offAllNamed('/ingresar');
+                          Get.offAllNamed('/login');
                         },
                         style: ElevatedButton.styleFrom(
                           primary: const Color.fromARGB(1000, 198, 169, 95),
@@ -76,7 +73,7 @@ class _homeState extends State<home> {
                               fontSize: 15,
                             )),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // registrer button
                       ElevatedButton(
                         onPressed: () {
@@ -95,14 +92,18 @@ class _homeState extends State<home> {
                             style: GoogleFonts.kodchasan(
                               color: const Color.fromARGB(1000, 198, 169, 95),
                               fontSize: 15,
-                            )),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ))
-    ]));
+                            )
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          )
+        ] 
+      )
+    );
   }
 }
