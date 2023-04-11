@@ -21,83 +21,92 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: [
           Positioned(
-            left: 0,
-            right: 0,
-            child: Container(
-              width: double.maxFinite,
-              height: Dimensions.height40,
-              decoration: const BoxDecoration(
-              image: DecorationImage(
-              image: AssetImage(
-                      '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'
-                  ),
-                )
-              )
-            )
-          ),
+              left: 0,
+              right: 0,
+              child: Container(
+                  width: double.maxFinite,
+                  height: Dimensions.height40,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage(
+                        '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
+                  )))),
           Positioned(
-            top: Dimensions.height5,
-            left: Dimensions.width5,
-            child: IconButton(
-              icon: const AppIcon(
-                iconData: Icons.arrow_back_ios,
-                iconColor: Color.fromARGB(255, 202, 209, 209)),
-              onPressed: () {
-                Get.offAllNamed('/home');
-              },
-            )
-          ),
+              top: Dimensions.height5,
+              left: Dimensions.width5,
+              child: IconButton(
+                icon: const AppIcon(
+                    iconData: Icons.arrow_back_ios,
+                    iconColor: Color.fromARGB(255, 202, 209, 209)),
+                onPressed: () {
+                  Get.offAllNamed('/home');
+                },
+              )),
           Positioned(
-            width: Dimensions.screenWidth,
-            top: Dimensions.height40,
-            height: Dimensions.width35,
-            child : Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Sing In',
-                  style: GoogleFonts.kodchasan(
-                    color: const Color.fromARGB(1000, 198, 169, 95),
-                    fontSize: 35,
-                    fontWeight: FontWeight.w500
-                  )
-                )
-              ],
-            )
-          ),
-          Positioned(
-            width: Dimensions.screenWidth,
-            top: Dimensions.height50,
-            height: Dimensions.width80,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.width10,
-                vertical: Dimensions.height5
-              ),
+              width: Dimensions.screenWidth,
+              top: Dimensions.height30,
+              height: Dimensions.width35,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:[
-                  //add inputs
-                  Input(
-                    false,
-                    "UserName",
-                    const EdgeInsets.all(0),
-                    const EdgeInsets.only(bottom: 8),
-                    const Color.fromARGB(255, 197, 197, 197),
-                    Colors.grey.shade700,
-                  ),
-                  Input(
-                    false,
-                    "Password",
-                    const EdgeInsets.all(0),
-                    const EdgeInsets.only(bottom: 8),
-                    const Color.fromARGB(255, 197, 197, 197),
-                    Colors.grey.shade700,
-                  )
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Sing In',
+                      style: GoogleFonts.kodchasan(
+                          color: const Color.fromARGB(1000, 198, 169, 95),
+                          fontSize: 35,
+                          fontWeight: FontWeight.w500))
                 ],
-              ),
-            )
-          )
+              )),
+          Positioned(
+              width: Dimensions.screenWidth,
+              top: Dimensions.height60,
+              height: Dimensions.width80,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.width10,
+                    vertical: Dimensions.height5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    //add inputs
+                    Input(
+                      false,
+                      "UserName",
+                      const EdgeInsets.all(0),
+                      const EdgeInsets.only(bottom: 8),
+                      const Color.fromARGB(255, 197, 197, 197),
+                      Colors.grey.shade700,
+                    ),
+
+                    Input(
+                      false,
+                      "Password",
+                      const EdgeInsets.all(0),
+                      const EdgeInsets.only(bottom: 8),
+                      const Color.fromARGB(255, 197, 197, 197),
+                      Colors.grey.shade700,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        //Get.offAllNamed('/login');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(1000, 198, 169, 95),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        minimumSize:
+                            Size(Dimensions.width90, Dimensions.buttonHeight),
+                      ),
+                      child: Text("sign in",
+                          style: GoogleFonts.kodchasan(
+                            color: Colors.black,
+                            fontSize: 15,
+                          )),
+                    )
+                  ],
+                ),
+              ))
         ],
       ),
     );
