@@ -18,6 +18,8 @@ class _SingInState extends State<SingIn> {
   @override
   Widget build(BuildContext context) {
      TextEditingController userController = TextEditingController();
+     TextEditingController passwordController = TextEditingController();
+     TextEditingController emailController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -71,6 +73,16 @@ class _SingInState extends State<SingIn> {
                     //add inputs
                     Input(
                       false,
+                      emailController,
+                      "Email",
+                      const EdgeInsets.all(0),
+                      const EdgeInsets.only(bottom: 8),
+                      const Color.fromARGB(255, 197, 197, 197),
+                      Colors.grey.shade700,
+                    ),
+                    Input(
+                      false,
+                      userController,
                       "UserName",
                       const EdgeInsets.all(0),
                       const EdgeInsets.only(bottom: 8),
@@ -79,14 +91,7 @@ class _SingInState extends State<SingIn> {
                     ),
                     Input(
                       false,
-                      "UserName",
-                      const EdgeInsets.all(0),
-                      const EdgeInsets.only(bottom: 8),
-                      const Color.fromARGB(255, 197, 197, 197),
-                      Colors.grey.shade700,
-                    ),
-                    Input(
-                      false,
+                      userController,
                       "Password",
                       const EdgeInsets.all(0),
                       const EdgeInsets.only(bottom: 8),

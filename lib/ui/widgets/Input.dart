@@ -4,15 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/dimensions.dart';
 
 class Input extends StatelessWidget {
-  //final TextEditingController controller;
+  final TextEditingController controller;
   final String text;
-  final bool esContrasena;
+  final bool isPassword;
   Color? colorType;
   EdgeInsets? margin;
   EdgeInsets? padding;
   Color colorText;
 
-  Input(this.esContrasena, /*this.controller*/ this.text, this.margin,
+  Input(this.isPassword, this.controller, this.text, this.margin,
       this.padding, this.colorType, this.colorText,
       {Key? key})
       : super(key: key);
@@ -24,10 +24,10 @@ class Input extends StatelessWidget {
       margin: margin,
       child: TextField(
           cursorColor: Colors.black,
-          obscureText: esContrasena,
+          obscureText: isPassword,
           style: TextStyle(color: colorText),
           autofocus: false,
-          //controller: controller,
+          controller: controller,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 30),
             filled: true,

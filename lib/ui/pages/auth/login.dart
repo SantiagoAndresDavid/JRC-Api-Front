@@ -17,6 +17,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     TextEditingController userController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -70,6 +71,7 @@ class _LoginState extends State<Login> {
                     //add inputs
                     Input(
                       false,
+                      userController,
                       "UserName",
                       const EdgeInsets.all(0),
                       const EdgeInsets.only(bottom: 8),
@@ -78,7 +80,8 @@ class _LoginState extends State<Login> {
                     ),
 
                     Input(
-                      false,
+                      true,
+                      passwordController,
                       "Password",
                       const EdgeInsets.all(0),
                       const EdgeInsets.only(bottom: 8),
@@ -88,7 +91,18 @@ class _LoginState extends State<Login> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        //Get.offAllNamed('/login');
+                        if (userController.text == "a" &&
+                            passwordController.text == "a") {
+                          Get.offAllNamed('/menu');
+                        } else {
+                          Get.showSnackbar(const GetSnackBar(
+                            title: 'Validacion de Usuarios',
+                            message: 'Datos Invalidos',
+                            icon: Icon(Icons.warning),
+                            duration: Duration(seconds: 5),
+                            backgroundColor: Colors.red,
+                          ));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(1000, 198, 169, 95),
