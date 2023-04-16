@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../../utils/dimensions.dart';
-import '../../widgets/Input.dart';
-import '../../widgets/appBar.dart';
-import '../../widgets/appIcon.dart';
-
-class Menu extends StatefulWidget {
-  const Menu({super.key});
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({super.key});
 
   @override
-  State<Menu> createState() => _MenuState();
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-class _MenuState extends State<Menu> {
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -42,28 +35,6 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Positioned(
-            left: 0,
-            right: 190,
-            child: Container(
-                height: Dimensions.height20,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                      '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
-                )))),
-        Positioned(
-            left: 190,
-            right: 0,
-            child: Container(
-                height: Dimensions.height20,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                      '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
-                )))),
-      ]),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
