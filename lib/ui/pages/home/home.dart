@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                               Size(Dimensions.width90, Dimensions.buttonHeight),
                         ),
                         child: Text("Sing In",
-                            style: GoogleFonts.kodchasan(
+                            style: GoogleFonts.robotoFlex(
                               color: Colors.black,
                               fontSize: 15,
                             )),
@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
                       // registrer button
                       ElevatedButton(
                         onPressed: () {
-                          //Get.offAllNamed('/registrar');
+                          Get.offAllNamed('/singIn');
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Colors.black,
@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
                             minimumSize: Size(
                                 Dimensions.width90, Dimensions.buttonHeight)),
                         child: Text("Sing Up",
-                            style: GoogleFonts.kodchasan(
+                            style: GoogleFonts.robotoFlex(
                               color: const Color.fromARGB(1000, 198, 169, 95),
                               fontSize: 15,
                             )
