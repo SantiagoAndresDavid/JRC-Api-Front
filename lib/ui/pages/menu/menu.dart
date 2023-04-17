@@ -17,7 +17,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(color: Colors.white,fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
@@ -25,7 +25,7 @@ class _MenuState extends State<Menu> {
     ),
     Text(
       'Index 1: Business',
-      style: optionStyle,
+      style: optionStyle
     ),
     Text(
       'Index 2: School',
@@ -62,7 +62,20 @@ class _MenuState extends State<Menu> {
                     image: DecorationImage(
                   image: AssetImage(
                       '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
-                )))),
+                )
+              )
+            )
+          ),
+        Positioned(
+              width: Dimensions.screenWidth,
+              top: Dimensions.height60,
+              height: Dimensions.width80,
+              child: Container(
+                height: Dimensions.width80,
+                child: _widgetOptions.elementAt(_selectedIndex),
+              )
+        )
+  
       ]),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
