@@ -17,16 +17,13 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-      TextStyle(color: Colors.white,fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
       style: optionStyle,
     ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle
-    ),
+    Text('Index 1: Business', style: optionStyle),
     Text(
       'Index 2: School',
       style: optionStyle,
@@ -45,7 +42,7 @@ class _MenuState extends State<Menu> {
       body: Stack(children: [
         Positioned(
             left: 0,
-            right: 190,
+            right: 180,
             child: Container(
                 height: Dimensions.height20,
                 decoration: const BoxDecoration(
@@ -54,28 +51,14 @@ class _MenuState extends State<Menu> {
                       '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
                 )))),
         Positioned(
-            left: 190,
-            right: 0,
+            width: Dimensions.screenWidth,
+            top: Dimensions.height17,
+            height: Dimensions.width150,
             child: Container(
-                height: Dimensions.height20,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                      '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
-                )
-              )
-            )
-          ),
-        Positioned(
-              width: Dimensions.screenWidth,
-              top: Dimensions.height60,
               height: Dimensions.width80,
-              child: Container(
-                height: Dimensions.width80,
-                child: _widgetOptions.elementAt(_selectedIndex),
-              )
-        )
-  
+              color: Colors.blue,
+              child: _widgetOptions.elementAt(_selectedIndex),
+            ))
       ]),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
