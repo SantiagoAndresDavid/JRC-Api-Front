@@ -15,17 +15,25 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Index 0: Home',
+      'Index 0: Stats',
       style: optionStyle,
     ),
-    Text('Index 1: Business', style: optionStyle),
+    Text('Index 1: Edit', style: optionStyle),
     Text(
-      'Index 2: School',
+      'Index 2: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: Search',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 4: Person',
       style: optionStyle,
     ),
   ];
@@ -56,7 +64,7 @@ class _MenuState extends State<Menu> {
             height: Dimensions.width190,
             child: Container(
                 height: Dimensions.width90,
-                color: Color.fromRGBO(33, 150, 243, 1),
+                //color: Color.fromRGBO(33, 150, 243, 1),
                 child: Align(
                   alignment: Alignment.center,
                   child: _widgetOptions.elementAt(_selectedIndex),
@@ -65,21 +73,33 @@ class _MenuState extends State<Menu> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(Icons.query_stats),
+            label: 'stats',
+            backgroundColor: Colors.black,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.edit),
+            label: 'Edit',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
+            icon: Icon(Icons.person),
+            label: 'Person',
+          )
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: const Color.fromARGB(1000, 198, 169, 95),
+        unselectedItemColor: const Color.fromARGB(1000, 198, 169, 95),
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.black,
       ),
     );
   }
