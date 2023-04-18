@@ -42,9 +42,9 @@ class _MenuState extends State<Menu> {
       body: Stack(children: [
         Positioned(
             left: 0,
-            right: 180,
+            right: 250,
             child: Container(
-                height: Dimensions.height20,
+                height: Dimensions.height15,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage(
@@ -52,13 +52,15 @@ class _MenuState extends State<Menu> {
                 )))),
         Positioned(
             width: Dimensions.screenWidth,
-            top: Dimensions.height17,
-            height: Dimensions.width150,
+            top: Dimensions.height13,
+            height: Dimensions.width190,
             child: Container(
-              height: Dimensions.width80,
-              color: Colors.blue,
-              child: _widgetOptions.elementAt(_selectedIndex),
-            ))
+                height: Dimensions.width90,
+                color: Color.fromRGBO(33, 150, 243, 1),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: _widgetOptions.elementAt(_selectedIndex),
+                )))
       ]),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
