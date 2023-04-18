@@ -18,24 +18,47 @@ class _MenuState extends State<Menu> {
   int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Stats',
-      style: optionStyle,
+  static final List<Widget> _widgetOptions = <Widget>[
+    Column(
+      children: const [
+        Text(
+          'Index 0: Stats',
+          style: optionStyle,
+        ),
+      ],
     ),
-    Text('Index 1: Edit', style: optionStyle),
-    Text(
-      'Index 2: Home',
-      style: optionStyle,
+    Column(
+      children: const [
+        Text(
+          'Index 1: Add',
+          style: optionStyle,
+        ),
+      ],
     ),
-    Text(
-      'Index 3: Search',
-      style: optionStyle,
+    Column(
+      children: const [
+        Text(
+          'Index 2: home',
+          style: optionStyle,
+        ),
+      ],
     ),
-    Text(
-      'Index 4: Person',
-      style: optionStyle,
+    Column(
+      children: const [
+        Text(
+          'Index 3: search',
+          style: optionStyle,
+        ),
+      ],
     ),
+    Column(
+      children: const [
+        Text(
+          'Index 4: Person',
+          style: optionStyle,
+        ),
+      ],
+    )
   ];
 
   void _onItemTapped(int index) {
@@ -78,8 +101,8 @@ class _MenuState extends State<Menu> {
             backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit),
-            label: 'Edit',
+            icon: Icon(Icons.add),
+            label: 'Add',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

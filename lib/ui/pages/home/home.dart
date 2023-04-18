@@ -78,7 +78,7 @@ class _HomeState extends State<Home> {
                       ElevatedButton(
                         onPressed: () {
                           Get.offAllNamed('/singIn');
-                        },
+                        },  
                         style: ElevatedButton.styleFrom(
                             primary: Colors.black,
                             shape: RoundedRectangleBorder(
