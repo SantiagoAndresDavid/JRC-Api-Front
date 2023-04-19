@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "111898350013",
+    "project_id": "jcr-api",
+    "storage_bucket": "jcr-api.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111898350013:android:532f95c6907225983d42d4",
+        "android_client_info": {
+          "package_name": "com.example.jrc_front"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111898350013-sosrvpr73hou8a5kq9glvajkbjt7or1t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0dy8Vo1ZrvsLalpxd_87TwgQhyCcrTeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111898350013-sosrvpr73hou8a5kq9glvajkbjt7or1t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
