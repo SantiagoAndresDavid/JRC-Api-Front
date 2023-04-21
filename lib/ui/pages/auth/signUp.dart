@@ -7,19 +7,18 @@ import '../../utils/dimensions.dart';
 import '../../widgets/Input.dart';
 import '../../widgets/appIcon.dart';
 
-class SingIn extends StatefulWidget {
-  const SingIn({super.key});
+class SingUp extends StatefulWidget {
+  const SingUp({super.key});
 
   @override
-  State<SingIn> createState() => _SingInState();
+  State<SingUp> createState() => _SingUpState();
 }
 
-class _SingInState extends State<SingIn> {
-  @override
+class _SingUpState extends State<SingUp> {
   Widget build(BuildContext context) {
-     TextEditingController userController = TextEditingController();
-     TextEditingController passwordController = TextEditingController();
-     TextEditingController emailController = TextEditingController();
+    TextEditingController userController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -100,7 +99,7 @@ class _SingInState extends State<SingIn> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        //Get.offAllNamed('/login');
+                        Get.offAllNamed('/login');
                       },
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(1000, 198, 169, 95),

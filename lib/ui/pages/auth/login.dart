@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jrc_front/controllers/auth/authController.dart';
 
 import '../../utils/dimensions.dart';
 import '../../widgets/Input.dart';
@@ -18,6 +19,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     TextEditingController userController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    AuthController authController = Get.put(AuthController());
     return Scaffold(
       body: Stack(
         children: [
@@ -79,7 +81,6 @@ class _LoginState extends State<Login> {
                       const Color.fromARGB(255, 197, 197, 197),
                       Colors.grey.shade700,
                     ),
-
                     Input(
                       true,
                       passwordController,
@@ -92,18 +93,21 @@ class _LoginState extends State<Login> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        if (userController.text == "a" &&
-                            passwordController.text == "a") {
-                          Get.offAllNamed('/menu');
-                        } else {
-                          Get.showSnackbar(const GetSnackBar(
-                            title: 'Validacion de Usuarios',
-                            message: 'Datos Invalidos',
-                            icon: Icon(Icons.warning),
-                            duration: Duration(seconds: 5),
-                            backgroundColor: Colors.red,
-                          ));
-                        }
+                        authController.LoginController(
+                                userController.text, passwordController.text)
+                            .then((value) {
+                          if (value == 'Iniciado con exito') {
+                            Get.offAllNamed('/menu');
+                          } else {
+                            Get.showSnackbar(const GetSnackBar(
+                              title: 'Validacion de Usuarios',
+                              message: 'Datos Invalidos',
+                              icon: Icon(Icons.warning),
+                              duration: Duration(seconds: 5),
+                              backgroundColor: Colors.red,
+                            ));
+                          }
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(1000, 198, 169, 95),

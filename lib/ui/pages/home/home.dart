@@ -17,18 +17,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
         body: Stack(children: [
       Positioned(
-        child: Container(
+          child: Container(
         width: double.maxFinite,
         height: Dimensions.height40,
         decoration: const BoxDecoration(
-          image: DecorationImage(
+            image: DecorationImage(
           image: AssetImage(
-              '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'
-              ),
-            )
-          ),
-        )
-      ),
+              '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
+        )),
+      )),
       const Align(
         alignment: Alignment.center,
       ),
@@ -77,8 +74,8 @@ class _HomeState extends State<Home> {
                       // registrer button
                       ElevatedButton(
                         onPressed: () {
-                          Get.offAllNamed('/singIn');
-                        },  
+                          Get.offAllNamed('/singUp');
+                        },
                         style: ElevatedButton.styleFrom(
                             primary: Colors.black,
                             shape: RoundedRectangleBorder(
@@ -92,18 +89,14 @@ class _HomeState extends State<Home> {
                             style: GoogleFonts.robotoFlex(
                               color: const Color.fromARGB(1000, 198, 169, 95),
                               fontSize: 15,
-                            )
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
-          )
-        ] 
-      )
-    );
+                            )),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ))
+    ]));
   }
 }
