@@ -6,16 +6,27 @@ class AuthRequest {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-
-
-
-
   static Future<UserCredential> SingIn(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
-            if (e.code == 'weak-password') {
+      if (e.code == 'user-not-found') {
+        return Future.error('Usuario no Existe');
+      } else if (e.code == 'wrong-password') {
+        return Future.error('Contraseña Incorrecta');
+      }
+    }
+    return Future.error('Error');
+  }
+
+  static Future<UserCredential> SingUp(
+      String email, String password) async {
+    try {
+      return await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
         return Future.error('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         return Future.error('The account already exists for that email.');
@@ -23,8 +34,4 @@ class AuthRequest {
     }
     return Future.error('Error');
   }
-
-
-
-
 }

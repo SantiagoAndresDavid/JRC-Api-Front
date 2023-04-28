@@ -28,7 +28,7 @@ class _LoginState extends State<Login> {
               right: 0,
               child: Container(
                   width: double.maxFinite,
-                  height: Dimensions.height40,
+                  height: Dimensions.height50,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(25)),
                       image: DecorationImage(
@@ -38,6 +38,7 @@ class _LoginState extends State<Login> {
           Positioned(
               top: Dimensions.height5,
               left: Dimensions.width5,
+              height: Dimensions.height10,
               child: IconButton(
                 icon: const AppIcon(
                     iconData: Icons.arrow_back_ios,
@@ -48,7 +49,7 @@ class _LoginState extends State<Login> {
               )),
           Positioned(
               width: Dimensions.screenWidth,
-              top: Dimensions.height30,
+              top: Dimensions.height40,
               height: Dimensions.width35,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,8 +63,8 @@ class _LoginState extends State<Login> {
               )),
           Positioned(
               width: Dimensions.screenWidth,
-              top: Dimensions.height60,
-              height: Dimensions.width80,
+              top: Dimensions.height65,
+              height: Dimensions.width75,
               child: Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.width10,
@@ -98,15 +99,26 @@ class _LoginState extends State<Login> {
                             .then((value) {
                           if (value == 'Iniciado con exito') {
                             Get.offAllNamed('/menu');
-                          } else {
-                            Get.showSnackbar(const GetSnackBar(
+                          }
+                        }).catchError((e) {
+                          Get.showSnackbar(
+                            const GetSnackBar(
                               title: 'Validacion de Usuarios',
                               message: 'Datos Invalidos',
                               icon: Icon(Icons.warning),
                               duration: Duration(seconds: 5),
                               backgroundColor: Colors.red,
-                            ));
-                          }
+                              snackPosition: SnackPosition
+                                  .TOP, // Configurar el SnackBar para que se muestre desde arriba
+                              barBlur:
+                                  0, // Eliminar el efecto blur para que el SnackBar sea más legible
+                              overlayBlur:
+                                  0, // Eliminar el efecto blur del fondo del SnackBar
+                              margin: const EdgeInsets.only(
+                                  top:
+                                      0), // Agregar margen superior para el SnackBar
+                            ),
+                          );
                         });
                       },
                       style: ElevatedButton.styleFrom(

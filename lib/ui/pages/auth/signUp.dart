@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../controllers/auth/authController.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/Input.dart';
 import '../../widgets/appIcon.dart';
@@ -19,6 +20,7 @@ class _SingUpState extends State<SingUp> {
     TextEditingController userController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController emailController = TextEditingController();
+    AuthController authController = Get.put(AuthController());
     return Scaffold(
       body: Stack(
         children: [
@@ -81,16 +83,7 @@ class _SingUpState extends State<SingUp> {
                     ),
                     Input(
                       false,
-                      userController,
-                      "UserName",
-                      const EdgeInsets.all(0),
-                      const EdgeInsets.only(bottom: 8),
-                      const Color.fromARGB(255, 197, 197, 197),
-                      Colors.grey.shade700,
-                    ),
-                    Input(
-                      false,
-                      userController,
+                      passwordController,
                       "Password",
                       const EdgeInsets.all(0),
                       const EdgeInsets.only(bottom: 8),
@@ -99,7 +92,51 @@ class _SingUpState extends State<SingUp> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Get.offAllNamed('/login');
+                        String response = '';
+                        authController.SingUpController(
+                                emailController.text, passwordController.text)
+                            .then((value) {
+                          if (value == 'Registrado con exito') {
+                            Get.showSnackbar(
+                              const GetSnackBar(
+                                title: 'Validacion de Usuarios',
+                                message: 'Usuario registrado correctamente',
+                                icon: Icon(Icons.warning),
+                                duration: Duration(seconds: 3),
+                                backgroundColor: Colors.green,
+                                snackPosition: SnackPosition
+                                    .TOP, // Configurar el SnackBar para que se muestre desde arriba
+                                barBlur:
+                                    0, // Eliminar el efecto blur para que el SnackBar sea más legible
+                                overlayBlur:
+                                    0, // Eliminar el efecto blur del fondo del SnackBar
+                                margin: EdgeInsets.only(
+                                    top:
+                                        0), // Agregar margen superior para el SnackBar
+                              ),
+                            );
+                            Get.offAllNamed('/login');
+                          }
+                        }).catchError((e) {
+                          Get.showSnackbar(
+                            GetSnackBar(
+                              title: 'Validacion de Usuarios',
+                              message: e.toString(),
+                              icon: Icon(Icons.warning),
+                              duration: Duration(seconds: 5),
+                              backgroundColor: Colors.red,
+                              snackPosition: SnackPosition
+                                  .TOP, // Configurar el SnackBar para que se muestre desde arriba
+                              barBlur:
+                                  0, // Eliminar el efecto blur para que el SnackBar sea más legible
+                              overlayBlur:
+                                  0, // Eliminar el efecto blur del fondo del SnackBar
+                              margin: const EdgeInsets.only(
+                                  top:
+                                      0), // Agregar margen superior para el SnackBar
+                            ),
+                          );
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(1000, 198, 169, 95),

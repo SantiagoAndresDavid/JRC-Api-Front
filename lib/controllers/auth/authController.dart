@@ -11,7 +11,17 @@ class AuthController extends GetxController {
       UserCredential user = await AuthRequest.SingIn(email, password);
       return 'Iniciado con exito';
     } on FirebaseAuthException catch (e) {
-      return e.toString(); 
+      return e.toString();
     }
   }
+
+  Future<String> SingUpController(String email, String password) async {
+    try {
+      UserCredential user = await AuthRequest.SingUp(email, password);
+      return 'Registrado con exito';
+    } on FirebaseAuthException catch (e) {
+      return e.toString();
+    }
+  }
+
 }
