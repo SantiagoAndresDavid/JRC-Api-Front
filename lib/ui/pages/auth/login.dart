@@ -17,7 +17,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController userController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     AuthController authController = Get.put(AuthController());
     return Scaffold(
@@ -74,8 +74,8 @@ class _LoginState extends State<Login> {
                     //add inputs
                     Input(
                       false,
-                      userController,
-                      "UserName",
+                      emailController,
+                      "Email",
                       const EdgeInsets.all(0),
                       const EdgeInsets.only(bottom: 8),
                       const Color.fromARGB(255, 197, 197, 197),
@@ -94,7 +94,7 @@ class _LoginState extends State<Login> {
                     ElevatedButton(
                       onPressed: () {
                         authController.LoginController(
-                                userController.text, passwordController.text)
+                                emailController.text, passwordController.text)
                             .then((value) {
                           if (value == 'Iniciado con exito') {
                             Get.offAllNamed('/menu');

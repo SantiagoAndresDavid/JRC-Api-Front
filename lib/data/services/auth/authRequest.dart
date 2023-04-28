@@ -10,10 +10,10 @@ class AuthRequest {
 
 
 
-  static Future<UserCredential> SingIn(String userName, String password) async {
+  static Future<UserCredential> SingIn(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(
-          email: userName, password: password);
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
             if (e.code == 'weak-password') {
         return Future.error('The password provided is too weak.');
