@@ -6,6 +6,7 @@ import '../../utils/dimensions.dart';
 import '../../widgets/Input.dart';
 import '../../widgets/appBar.dart';
 import '../../widgets/appIcon.dart';
+import 'add/add.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -19,46 +20,61 @@ class _MenuState extends State<Menu> {
   static const TextStyle optionStyle =
       TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
-    Column(
-      children: const [
-        Text(
-          'Index 0: Stats',
-          style: optionStyle,
-        ),
-      ],
+    AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      child: Column(
+        key: ValueKey<int>(0),
+        children: const [
+          Text(
+            'Index 0: Stats',
+            style: optionStyle,
+          ),
+        ],
+      ),
     ),
-    Column(
-      children: const [
-        Text(
-          'Index 1: Add',
-          style: optionStyle,
-        ),
-      ],
+    AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      child: Column(
+        key: ValueKey<int>(1),
+        children: [Add()],
+      ),
     ),
-    Column(
-      children: const [
-        Text(
-          'Index 2: home',
-          style: optionStyle,
-        ),
-      ],
+    AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      child: Column(
+        key: ValueKey<int>(2),
+        children: const [
+          Text(
+            'Index 2: home',
+            style: optionStyle,
+          ),
+        ],
+      ),
     ),
-    Column(
-      children: const [
-        Text(
-          'Index 3: search',
-          style: optionStyle,
-        ),
-      ],
+    AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      child: Column(
+        key: ValueKey<int>(3),
+        children: const [
+          Text(
+            'Index 3: search',
+            style: optionStyle,
+          ),
+        ],
+      ),
     ),
-    Column(
-      children: const [
-        Text(
-          'Index 4: Person',
-          style: optionStyle,
-        ),
-      ],
-    )
+    AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      child: Column(
+        key: ValueKey<int>(4),
+        children: const [
+          Text(
+            'Index 4: Person',
+            style: optionStyle,
+          ),
+        ],
+      ),
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -84,7 +100,7 @@ class _MenuState extends State<Menu> {
         Positioned(
             width: Dimensions.screenWidth,
             top: Dimensions.height13,
-            height: Dimensions.width190,
+            height: Dimensions.screenHeight,
             child: Container(
                 height: Dimensions.width90,
                 //color: Color.fromRGBO(33, 150, 243, 1),

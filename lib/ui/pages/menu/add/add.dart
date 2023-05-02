@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 
-class ADD extends StatefulWidget {
-  const ADD({super.key});
+import '../../../utils/dimensions.dart';
+
+class Add extends StatefulWidget {
+  const Add({super.key});
 
   @override
-  State<ADD> createState() => _ADDState();
+  State<Add> createState() => _AddState();
 }
 
-class _ADDState extends State<ADD> {
+class _AddState extends State<Add> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: [
+        // Aquí puedes agregar cualquier otro widget que quieras
+        Text(
+          'Menu',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
   }
 }
