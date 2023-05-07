@@ -105,24 +105,27 @@ class _AddState extends State<Add> {
           ),
         ),
         const SizedBox(height: 10),
-        Row(
-          children: [
-            SizedBox(
-              width: 180,
-              child: ColorPickerWidget(
-                currentColor: currentColor,
-                onColorChanged: changeColor,
+        SizedBox(
+          height: 258,
+          child: Row(
+            children: [
+              const SizedBox(width: 15),
+              SizedBox(
+                width: 180,
+                child: ColorPickerWidget(
+                  currentColor: currentColor,
+                  onColorChanged: changeColor,
+                ),
               ),
-            ),
-            const SizedBox(width: 10),
-            SizedBox(
-              width: 160,
-              child: ImagePickerWidget(onImageSelected: _onImageSelected),
-            ),
-          ],
+              const SizedBox(width: 10),
+              SizedBox(
+                width: 160,
+                child: ImagePickerWidget(onImageSelected: _onImageSelected),
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
 }
- 
