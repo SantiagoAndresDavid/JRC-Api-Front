@@ -22,8 +22,7 @@ class _HomeState extends State<Home> {
         height: Dimensions.height40,
         decoration: const BoxDecoration(
             image: DecorationImage(
-          image: AssetImage(
-              '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
+          image: AssetImage('assets/images/logo.png'),
         )),
       )),
       const Align(

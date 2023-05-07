@@ -22,6 +22,12 @@ class _MenuState extends State<Menu> {
   static final List<Widget> _widgetOptions = <Widget>[
     AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
       child: Column(
         key: ValueKey<int>(0),
         children: const [
@@ -33,14 +39,26 @@ class _MenuState extends State<Menu> {
       ),
     ),
     AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 250),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
       child: Column(
         key: ValueKey<int>(1),
-        children: [Add()],
+        children: const [Add()],
       ),
     ),
     AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
       child: Column(
         key: ValueKey<int>(2),
         children: const [
@@ -53,6 +71,12 @@ class _MenuState extends State<Menu> {
     ),
     AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
       child: Column(
         key: ValueKey<int>(3),
         children: const [
@@ -65,6 +89,12 @@ class _MenuState extends State<Menu> {
     ),
     AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
       child: Column(
         key: ValueKey<int>(4),
         children: const [
@@ -95,7 +125,7 @@ class _MenuState extends State<Menu> {
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage(
-                      '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
+                      'assets/images/logo.png'),
                 )))),
         Positioned(
             width: Dimensions.screenWidth,

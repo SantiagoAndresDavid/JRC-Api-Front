@@ -32,8 +32,7 @@ class _LoginState extends State<Login> {
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(25)),
                       image: DecorationImage(
-                        image: AssetImage(
-                            '/home/santiago/Documents/WorkSpace/JRC-Api-Front/assets/images/logo.png'),
+                        image: AssetImage('assets/images/logo.png'),
                       )))),
           Positioned(
               top: Dimensions.height5,
