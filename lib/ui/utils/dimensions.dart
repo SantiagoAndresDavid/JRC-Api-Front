@@ -36,4 +36,5 @@ class Dimensions {
   static double width90 = screenWidth * 0.9;
   static double width190 = screenWidth * 1.9;
   static double buttonHeight = Dimensions.screenHeight * 0.075;
+  static double buttonheight2 = Dimensions.screenHeight * 0.057;
 }

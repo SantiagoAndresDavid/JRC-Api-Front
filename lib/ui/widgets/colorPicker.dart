@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ColorPickerWidget extends StatelessWidget {
   final Color currentColor;
@@ -47,13 +48,16 @@ class ColorPickerWidget extends StatelessWidget {
               },
             );
           },
-          child: const Text('Seleccionar un color'),
           style: ElevatedButton.styleFrom(
-            primary: const Color.fromARGB(1000, 198, 169,
-                95), // Establecer color de fondo del botón como verde
+            primary: const Color.fromARGB(1000, 198, 169, 95),
           ),
+          child: Text("Escoje un Color",
+              style: GoogleFonts.robotoFlex(
+                color: Colors.black,
+                fontSize: 15,
+              )),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           width: 50,
           height: 50,

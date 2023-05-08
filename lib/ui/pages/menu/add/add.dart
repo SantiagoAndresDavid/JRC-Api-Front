@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/ImagePicker.dart';
@@ -91,7 +92,6 @@ class _AddState extends State<Add> {
           ],
         ),
         const SizedBox(height: 20),
-
         SizedBox(
           width: 350,
           child: Input(
@@ -106,7 +106,7 @@ class _AddState extends State<Add> {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: 258,
+          height: 200,
           child: Row(
             children: [
               const SizedBox(width: 15),
@@ -125,6 +125,21 @@ class _AddState extends State<Add> {
             ],
           ),
         ),
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            primary: const Color.fromARGB(1000, 198, 169, 95),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            minimumSize: Size(Dimensions.width90, Dimensions.buttonheight2),
+          ),
+          child: Text("Guardar",
+              style: GoogleFonts.robotoFlex(
+                color: Colors.black,
+                fontSize: 15,
+              )),
+        )
       ],
     );
   }
