@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jrc_front/domain/clothes.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/ImagePicker.dart';
 import '../../../widgets/Input.dart';
@@ -21,7 +22,7 @@ class _AddState extends State<Add> {
   TextEditingController availabilityController = TextEditingController();
   TextEditingController providerController = TextEditingController();
   Color currentColor = Colors.red;
-  File? _selectedImage;
+  File? selectedImage;
 
   void changeColor(Color color) {
     setState(() => currentColor = color);
@@ -29,7 +30,7 @@ class _AddState extends State<Add> {
 
   void _onImageSelected(File image) {
     setState(() {
-      _selectedImage = image;
+      selectedImage = image;
     });
   }
 
@@ -126,7 +127,18 @@ class _AddState extends State<Add> {
           ),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Clothes clothes = Clothes(
+                model: modelController.text,
+                size: sizeController.text,
+                availability: availabilityController.text,
+                supplier: providerController.text,
+                color:
+                    "Color(0x${currentColor.value.toRadixString(16).padLeft(8, '0')})",
+                image: selectedImage?.path);
+
+            clothes.color.toString();
+          },
           style: ElevatedButton.styleFrom(
             primary: const Color.fromARGB(1000, 198, 169, 95),
             shape: RoundedRectangleBorder(

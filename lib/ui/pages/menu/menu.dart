@@ -124,8 +124,7 @@ class _MenuState extends State<Menu> {
                 height: Dimensions.height15,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/logo.png'),
+                  image: AssetImage('assets/images/logo.png'),
                 )))),
         Positioned(
             width: Dimensions.screenWidth,
