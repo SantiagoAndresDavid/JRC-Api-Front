@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jrc_front/ui/pages/menu/search/search.dart';
+import 'package:jrc_front/ui/pages/menu/stats/stats.dart';
 
 import '../../utils/dimensions.dart';
 import '../../widgets/Input.dart';
@@ -30,12 +32,7 @@ class _MenuState extends State<Menu> {
       },
       child: Column(
         key: ValueKey<int>(0),
-        children: const [
-          Text(
-            'Index 0: Stats',
-            style: optionStyle,
-          ),
-        ],
+        children: const [Stats()],
       ),
     ),
     AnimatedSwitcher(
@@ -79,12 +76,7 @@ class _MenuState extends State<Menu> {
       },
       child: Column(
         key: ValueKey<int>(3),
-        children: const [
-          Text(
-            'Index 3: search',
-            style: optionStyle,
-          ),
-        ],
+        children: const [Search()],
       ),
     ),
     AnimatedSwitcher(

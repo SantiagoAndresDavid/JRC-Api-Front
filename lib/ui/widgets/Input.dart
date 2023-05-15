@@ -12,8 +12,8 @@ class Input extends StatelessWidget {
   EdgeInsets? padding;
   Color colorText;
 
-  Input(this.isPassword, this.controller, this.text, this.margin,
-      this.padding, this.colorType, this.colorText,
+  Input(this.isPassword, this.controller, this.text, this.margin, this.padding,
+      this.colorType, this.colorText,
       {Key? key})
       : super(key: key);
 
@@ -41,11 +41,8 @@ class Input extends StatelessWidget {
             labelStyle: GoogleFonts.montserrat(
               fontSize: 16,
               color: colorText,
-          ),
-        )
-      ),
+            ),
+          )),
     );
   }
 }
-
-
