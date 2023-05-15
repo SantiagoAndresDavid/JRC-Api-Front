@@ -1,10 +1,14 @@
+import 'dart:io';
+
 class Clothes {
+  // ignore: prefer_typing_uninitialized_variables
   var model;
   var size;
   var availability;
   var supplier;
   var color;
-  var image;
+  File? image;
+
   Clothes({
     required this.model,
     required this.size,

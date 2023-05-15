@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../../data/services/auth/authRequest.dart';
 
 class AuthController extends GetxController {
+  
   Future<String> LoginController(String email, String password) async {
     try {
       UserCredential user = await AuthRequest.SingIn(email, password);

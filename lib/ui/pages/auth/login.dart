@@ -33,7 +33,6 @@ class _LoginState extends State<Login> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     AuthController authController = Get.put(AuthController());
-
     return Scaffold(
       body: Stack(
         children: [

@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:jrc_front/domain/clothes.dart';
 import 'package:jrc_front/ui/pages/auth/signUp.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fs;
 
@@ -11,39 +13,38 @@ class AddRequest {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   static UploadTask? uploadTask;
 
-  static Future<void> saveClothes(Map<String, dynamic> proyecto, String? file,
-      String? pickedFileextencion) async {
-    var url = '';
-    if (file != null) {
-      url = await uploadFile(
-          file, proyecto['idProyecto'], uploadTask, pickedFileextencion);
-    }
+  static Future<String> saveClothes(Clothes clothes) async {
+    var url = await uploadFile(clothes.model, clothes.image);
 
-    proyecto['anexos'] = url.toString();
+    /*proyecto['anexos'] = url.toString();
 
     await _db
         .collection('Proyectos')
         .doc(proyecto['Campo'])
         .set(proyecto)
-        .catchError((e) {});
+        .catchError((e) {});*/
+    return "se guardo con exito";
   }
 
-  static Future<dynamic> uploadFile(String? file, idProyecto,
-      UploadTask? uploadTask, String? pickedFileextencion) async {
+  static Future<dynamic> uploadFile(String model, File?selectedImage) async {
     var r;
-    final path = 'anexo/$idProyecto.$pickedFileextencion';
-    if (file != null) {
-      final ref = FirebaseStorage.instance.ref().child(path);
-      log(file.toString());
-      uploadTask = ref.putString(file);
-      final snaphot = await uploadTask.whenComplete(() {});
+    final path = 'Image/$model';
 
-      final urlDownload = await snaphot.ref.getDownloadURL();
+    try {
+      final storage = FirebaseStorage.instance;
+      final ref = storage.ref().child(path);
+      final uploadTask = ref.putFile(selectedImage!);
+      final snapshot = await uploadTask.whenComplete(() {});
+      final urlDownload = await snapshot.ref.getDownloadURL();
       r = urlDownload;
       log('Link de descarga: $urlDownload');
+    } catch (error) {
+      if (error is FirebaseException) {
+        log('Error al subir la imagen: ${error.message}');
+      } else {
+        log('Error al subir la imagen: $error');
+      }
     }
-
     return r;
   }
-
 }

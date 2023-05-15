@@ -1,9 +1,11 @@
 import 'dart:io';
 
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:jrc_front/domain/clothes.dart';
+import '../../../../controllers/add/addController.dart';
 import '../../../utils/dimensions.dart';
 import '../../../widgets/ImagePicker.dart';
 import '../../../widgets/Input.dart';
@@ -21,6 +23,7 @@ class _AddState extends State<Add> {
   TextEditingController sizeController = TextEditingController();
   TextEditingController availabilityController = TextEditingController();
   TextEditingController providerController = TextEditingController();
+  AddController addController = AddController();
   Color currentColor = Colors.red;
   File? selectedImage;
 
@@ -38,7 +41,7 @@ class _AddState extends State<Add> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Aquí puedes agregar cualquier otro widget que quieras
+
         const Text(
           'Agregar Nuevos Productos',
           textAlign: TextAlign.center,
@@ -135,9 +138,31 @@ class _AddState extends State<Add> {
                 supplier: providerController.text,
                 color:
                     "Color(0x${currentColor.value.toRadixString(16).padLeft(8, '0')})",
-                image: selectedImage?.path);
+                image: selectedImage);
 
-            clothes.color.toString();
+            addController.SaveClothes(clothes)
+                .then((value) {
+              if (value == 'Registrado con exito') {
+                Get.snackbar(
+                  'Validacion de datos',
+                  'Se ha Registrado Correctamente',
+                  snackPosition: SnackPosition.TOP,
+                  backgroundColor: Colors.green,
+                  colorText: Colors.white,
+                  duration: Duration(seconds: 3),
+                );
+                Get.offAllNamed('/home');
+              }
+            }).catchError((e) {
+              Get.snackbar(
+                'No se ha guardado correctamente',
+                e.toString(),
+                snackPosition: SnackPosition.TOP,
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+                duration: Duration(seconds: 5),
+              );
+            });
           },
           style: ElevatedButton.styleFrom(
             primary: const Color.fromARGB(1000, 198, 169, 95),
