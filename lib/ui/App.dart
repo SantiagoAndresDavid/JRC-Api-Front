@@ -3,6 +3,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:jrc_front/ui/pages/auth/login.dart';
 import 'package:jrc_front/ui/pages/auth/signUp.dart';
 import 'package:jrc_front/ui/pages/home/home.dart';
+import 'package:jrc_front/ui/pages/menu/add/add.dart';
 import 'package:jrc_front/ui/pages/menu/menu.dart';
 import 'package:jrc_front/ui/utils/colorTheme.dart';
 
@@ -36,6 +37,7 @@ class _AppState extends State<App> {
         '/login': (context) => const Login(),
         '/singUp': (context) => const SingUp(),
         '/menu': (context) => const Menu(),
+        '/add': (context) => const Add(),
       },
       //TODO: change class login to other class
       home: const Home(),

@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:jrc_front/domain/clothes.dart';
@@ -16,17 +16,22 @@ class AddRequest {
   static Future<String> saveClothes(Clothes clothes) async {
     var url = await uploadFile(clothes.model, clothes.image);
 
-    /*proyecto['anexos'] = url.toString();
+    var clothesUrl = {
+      'model': clothes.model,
+      'size': clothes.size,
+      'availability': clothes.availability,
+      'supplier': clothes.supplier,
+      'color': clothes.color,
+      'image': url.toString(),
+    };
+    await _db.collection('Clothes').doc().set(clothesUrl).catchError((e) {
+      return (e);
+    });
 
-    await _db
-        .collection('Proyectos')
-        .doc(proyecto['Campo'])
-        .set(proyecto)
-        .catchError((e) {});*/
     return "se guardo con exito";
   }
 
-  static Future<dynamic> uploadFile(String model, File?selectedImage) async {
+  static Future<dynamic> uploadFile(String model, File? selectedImage) async {
     var r;
     final path = 'Image/$model';
 

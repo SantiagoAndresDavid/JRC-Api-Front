@@ -30,22 +30,9 @@ class _MenuState extends State<Menu> {
           child: child,
         );
       },
-      child: Column(
-        key: ValueKey<int>(0),
-        children: const [Stats()],
-      ),
-    ),
-    AnimatedSwitcher(
-      duration: const Duration(milliseconds: 250),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return ScaleTransition(
-          scale: animation,
-          child: child,
-        );
-      },
-      child: Column(
-        key: ValueKey<int>(1),
-        children: const [Add()],
+      child: Container(
+        key: const ValueKey<int>(0),
+        child: const Stats(),
       ),
     ),
     AnimatedSwitcher(
@@ -56,14 +43,9 @@ class _MenuState extends State<Menu> {
           child: child,
         );
       },
-      child: Column(
-        key: ValueKey<int>(2),
-        children: const [
-          Text(
-            'Index 2: home',
-            style: optionStyle,
-          ),
-        ],
+      child: Container(
+        key: const ValueKey<int>(1),
+        child: const Add(),
       ),
     ),
     AnimatedSwitcher(
@@ -74,9 +56,9 @@ class _MenuState extends State<Menu> {
           child: child,
         );
       },
-      child: Column(
-        key: ValueKey<int>(3),
-        children: const [Search()],
+      child: Container(
+        key: const ValueKey<int>(2),
+        child: null,
       ),
     ),
     AnimatedSwitcher(
@@ -87,14 +69,25 @@ class _MenuState extends State<Menu> {
           child: child,
         );
       },
-      child: Column(
-        key: ValueKey<int>(4),
-        children: const [
-          Text(
-            'Index 4: Person',
-            style: optionStyle,
-          ),
-        ],
+      child: Container(
+        key: const ValueKey<int>(3),
+        child: const Search(),
+      ),
+    ),
+    AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+      },
+      child: Container(
+        key: const ValueKey<int>(4),
+        child: const Text(
+          'Index 4: Person',
+          style: optionStyle,
+        ),
       ),
     ),
   ];
