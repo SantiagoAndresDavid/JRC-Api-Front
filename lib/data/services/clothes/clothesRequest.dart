@@ -5,30 +5,32 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:jrc_front/domain/clothes.dart';
-import 'package:jrc_front/ui/pages/auth/signUp.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fs;
 
-class AddRequest {
+class ClothesRequest {
   static final fs.FirebaseStorage storage = fs.FirebaseStorage.instance;
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   static UploadTask? uploadTask;
 
   static Future<String> saveClothes(Clothes clothes) async {
-    var url = await uploadFile(clothes.model, clothes.image);
+    try {
+      var url = await uploadFile(clothes.model, clothes.image);
 
-    var clothesUrl = {
-      'model': clothes.model,
-      'size': clothes.size,
-      'availability': clothes.availability,
-      'supplier': clothes.supplier,
-      'color': clothes.color,
-      'image': url.toString(),
-    };
-    await _db.collection('Clothes').doc().set(clothesUrl).catchError((e) {
-      return (e);
-    });
+      var clothesUrl = {
+        'model': clothes.model,
+        'size': clothes.size,
+        'availability': clothes.availability,
+        'supplier': clothes.supplier,
+        'color': clothes.color,
+        'image': url.toString(),
+      };
 
-    return "se guardo con exito";
+      await _db.collection('Clothes').doc(clothes.model).set(clothesUrl);
+
+      return 'Se ha registrado correctamente';
+    } catch (e) {
+      return 'Error: No se pudo registrar correctamente';
+    }
   }
 
   static Future<dynamic> uploadFile(String model, File? selectedImage) async {
