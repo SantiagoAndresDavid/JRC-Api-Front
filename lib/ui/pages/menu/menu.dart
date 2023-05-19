@@ -18,7 +18,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold);
   static final List<Widget> _widgetOptions = <Widget>[
@@ -46,19 +46,6 @@ class _MenuState extends State<Menu> {
       child: Container(
         key: const ValueKey<int>(1),
         child: const Add(),
-      ),
-    ),
-    AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return ScaleTransition(
-          scale: animation,
-          child: child,
-        );
-      },
-      child: Container(
-        key: const ValueKey<int>(2),
-        child: null,
       ),
     ),
     AnimatedSwitcher(
@@ -134,10 +121,10 @@ class _MenuState extends State<Menu> {
             icon: Icon(Icons.add),
             label: 'Add',
           ),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
+          ),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',
