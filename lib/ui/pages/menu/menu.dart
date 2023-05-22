@@ -90,6 +90,7 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       body: Stack(children: [
         Positioned(
+            top: 10,
             left: 0,
             right: 250,
             child: Container(
@@ -102,7 +103,7 @@ class _MenuState extends State<Menu> {
             width: Dimensions.screenWidth,
             top: Dimensions.height13,
             height: Dimensions.screenHeight,
-            child: Container(
+            child: SizedBox(
                 height: Dimensions.width90,
                 //color: Color.fromRGBO(33, 150, 243, 1),
                 child: Align(

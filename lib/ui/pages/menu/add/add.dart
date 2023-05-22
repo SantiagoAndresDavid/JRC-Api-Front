@@ -40,11 +40,12 @@ class _AddState extends State<Add> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 30),
         const Text(
           'Agregar Nuevos Productos',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 40,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
             color: const Color.fromARGB(1000, 198, 169, 95),
           ),
