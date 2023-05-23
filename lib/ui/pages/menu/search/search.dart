@@ -18,6 +18,7 @@ class _SearchState extends State<Search> {
   ClothesController controller = ClothesController();
 
   List<dynamic> listClothes = [];
+  List<dynamic> filteredClothes = []; // Nueva lista filtrada
 
   @override
   void initState() {
@@ -29,6 +30,7 @@ class _SearchState extends State<Search> {
     List<dynamic> clothes = await controller.GetAllClothes();
     setState(() {
       listClothes = clothes;
+      filteredClothes = clothes; // Inicialmente, ambas listas son iguales
     });
   }
 
@@ -68,7 +70,7 @@ class _SearchState extends State<Search> {
               icon: const Icon(
                 Icons.search,
                 color: Color.fromARGB(1000, 198, 169, 95),
-                size: 30, // Ajusta el tamaño del ícono según tus necesidades
+                size: 30,
               ),
               color: Colors.black,
               splashRadius: 20,
@@ -76,17 +78,21 @@ class _SearchState extends State<Search> {
           ],
         ),
         const SizedBox(height: 15),
-        ClothesListWidget(clothesList: listClothes),
+        ClothesListWidget(
+            clothesList:
+                filteredClothes), // Usar la lista filtrada en lugar de la lista original
       ],
     );
   }
 
   void searchClothes(String query) {
     setState(() {
-      /*clothesList = listClothes
-          .where(
-              (clothes) => clothes.toLowerCase().contains(query.toLowerCase()))
-          .toList();*/
+      filteredClothes = listClothes
+          .where((clothes) => clothes['model']
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()))
+          .toList();
     });
   }
 }

@@ -27,7 +27,7 @@ class ClothesRequest {
 
       await _db.collection('Clothes').doc(clothes.model).set(clothesUrl);
 
-      return 'Se ha registrado correctamente';
+      return 'Se ha Registrado Correctamente';
     } catch (e) {
       return 'Error: No se pudo registrar correctamente';
     }
