@@ -172,7 +172,8 @@ class _AddState extends State<Add> {
               style: GoogleFonts.robotoFlex(
                 color: Colors.black,
                 fontSize: 15,
-              )),
+              )
+          ),
         )
       ],
     );

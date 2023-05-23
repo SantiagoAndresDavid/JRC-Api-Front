@@ -1,52 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:jrc_front/controllers/clothes/clothesController.dart';
+import 'package:jrc_front/domain/clothes.dart';
 import 'package:jrc_front/ui/utils/dimensions.dart';
 
 import '../../../widgets/Input.dart';
-import '../../../widgets/searchInput.dart';
+import '../../../widgets/ListView.dart';
 
 class Search extends StatefulWidget {
-  const Search({super.key});
+  const Search({Key? key});
 
   @override
   State<Search> createState() => _SearchState();
 }
 
 class _SearchState extends State<Search> {
+  TextEditingController providerController = TextEditingController();
+  ClothesController controller = ClothesController();
+
+  List<dynamic> listClothes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchClothes();
+  }
+
+  Future<void> fetchClothes() async {
+    List<dynamic> clothes = await controller.GetAllClothes();
+    setState(() {
+      listClothes = clothes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    String _searchQuery = '';
-    TextEditingController searchController = TextEditingController();
-    final List<String> entries = <String>[
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M'
-    ];
-    final List<int> colorCodes = <int>[
-      600,
-      500,
-      100,
-      200,
-      300,
-      400,
-      500,
-      600,
-      700,
-      800,
-      900,
-      1000,
-      1100
-    ];
-
     return Column(
       children: [
         const Text(
@@ -59,24 +46,47 @@ class _SearchState extends State<Search> {
           ),
         ),
         const SizedBox(height: 30),
-        SizedBox(height: 70, child: SearchScreen()),
-        const SizedBox(height: 15),
-        SizedBox(
-            height: 550,
-            child: ListView.separated(
-              padding: const EdgeInsets.all(8),
-              itemCount: entries.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  height: 100,
-                  color: Colors.amber[colorCodes[index]],
-                  child: Center(child: Text('Entry ${entries[index]}')),
-                );
+        Row(
+          children: [
+            const SizedBox(width: 15),
+            SizedBox(
+              width: 300,
+              child: Input(
+                false,
+                providerController,
+                "search",
+                const EdgeInsets.all(0),
+                const EdgeInsets.only(bottom: 8),
+                const Color.fromARGB(255, 197, 197, 197),
+                Colors.grey.shade700,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                searchClothes(providerController.text);
               },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
-            ))
+              icon: const Icon(
+                Icons.search,
+                color: Color.fromARGB(1000, 198, 169, 95),
+                size: 30, // Ajusta el tamaño del ícono según tus necesidades
+              ),
+              color: Colors.black,
+              splashRadius: 20,
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        ClothesListWidget(clothesList: listClothes),
       ],
     );
+  }
+
+  void searchClothes(String query) {
+    setState(() {
+      /*clothesList = listClothes
+          .where(
+              (clothes) => clothes.toLowerCase().contains(query.toLowerCase()))
+          .toList();*/
+    });
   }
 }

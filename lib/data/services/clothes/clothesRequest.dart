@@ -54,4 +54,24 @@ class ClothesRequest {
     }
     return r;
   }
+
+  static Future<List<dynamic>> getAllClothes() async {
+    List<dynamic> clothesList = [];
+
+    var response = await _db.collection("Clothes").get();
+    response.docs.forEach((doc) {
+      var clothesUrl = {
+        'model': doc.data()['model'],
+        'size': doc.data()['size'],
+        'availability': doc.data()['availability'],
+        'supplier': doc.data()['supplier'],
+        'color': doc.data()['color'],
+        'image': doc.data()['image'],
+      };
+
+      clothesList.add(clothesUrl);
+    });
+
+    return clothesList;
+  }
 }
