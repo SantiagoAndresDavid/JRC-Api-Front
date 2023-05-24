@@ -16,6 +16,12 @@ class ClothesController extends GetxController {
   }
 
   Future<List> GetAllClothes() async {
-     return await ClothesRequest.getAllClothes();
+    return await ClothesRequest.getAllClothes();
+  }
+
+  Future<String> DeleteClothes(String model) async {
+    return await ClothesRequest.deleteClothes(model);
+    
+
   }
 }

@@ -74,4 +74,13 @@ class ClothesRequest {
 
     return clothesList;
   }
+
+  static Future<String> deleteClothes(String model) async {
+    try {
+      await _db.collection('Clothes').doc(model).delete();
+      return 'Se ha Borrado correctamente';
+    } catch (e) {
+      return 'Error: No se pudo registrar correctamente';
+    }
+  }
 }

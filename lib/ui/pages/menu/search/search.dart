@@ -14,23 +14,21 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  TextEditingController providerController = TextEditingController();
+  TextEditingController modelController = TextEditingController();
   ClothesController controller = ClothesController();
-
-  List<dynamic> listClothes = [];
-  List<dynamic> filteredClothes = []; // Nueva lista filtrada
+  bool _showClothesList = false;
+  Key _clothesListKey = UniqueKey();
 
   @override
   void initState() {
     super.initState();
-    fetchClothes();
   }
 
-  Future<void> fetchClothes() async {
-    List<dynamic> clothes = await controller.GetAllClothes();
+  void _searchClothes() {
     setState(() {
-      listClothes = clothes;
-      filteredClothes = clothes; // Inicialmente, ambas listas son iguales
+      _showClothesList = true;
+      _clothesListKey =
+          UniqueKey(); // Genera una nueva clave única para recargar el widget
     });
   }
 
@@ -55,7 +53,7 @@ class _SearchState extends State<Search> {
               width: 300,
               child: Input(
                 false,
-                providerController,
+                modelController,
                 "search",
                 const EdgeInsets.all(0),
                 const EdgeInsets.only(bottom: 8),
@@ -64,9 +62,7 @@ class _SearchState extends State<Search> {
               ),
             ),
             IconButton(
-              onPressed: () {
-                searchClothes(providerController.text);
-              },
+              onPressed: _searchClothes,
               icon: const Icon(
                 Icons.search,
                 color: Color.fromARGB(1000, 198, 169, 95),
@@ -77,22 +73,12 @@ class _SearchState extends State<Search> {
             ),
           ],
         ),
-        const SizedBox(height: 15),
-        ClothesListWidget(
-            clothesList:
-                filteredClothes), // Usar la lista filtrada en lugar de la lista original
+        if (_showClothesList || modelController.text.isEmpty)
+          ClothesListWidget(
+            key: _clothesListKey, // Asigna la clave única al widget
+            model: modelController.text,
+          ),
       ],
     );
-  }
-
-  void searchClothes(String query) {
-    setState(() {
-      filteredClothes = listClothes
-          .where((clothes) => clothes['model']
-              .toString()
-              .toLowerCase()
-              .contains(query.toLowerCase()))
-          .toList();
-    });
   }
 }
