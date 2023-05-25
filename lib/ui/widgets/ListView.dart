@@ -74,18 +74,24 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                     return Dismissible(
                       key: Key(clothesItem["model"]),
                       onDismissed: (direction) {
-                        setState(() {
-                          list.removeAt(index); // Remove the item from the list
-                          controller.DeleteClothes(itemName);
-                        });
-                        Get.snackbar(
-                          'Validacion de datos',
-                          'Se ha borrado con éxito',
-                          snackPosition: SnackPosition.TOP,
-                          backgroundColor: Colors.green,
-                          colorText: Colors.white,
-                          duration: const Duration(seconds: 3),
-                        );
+                        if (direction == DismissDirection.endToStart) {
+                          // Swiped towards the left (end to start)
+                          print(itemName);
+                        } else if (direction == DismissDirection.startToEnd) {
+                          // Swiped towards the right (start to end)
+                          setState(() {
+                            list.removeAt(index);
+                            controller.DeleteClothes(itemName);
+                          });
+                          Get.snackbar(
+                            'Validacion de datos',
+                            'Se ha borrado con éxito',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white,
+                            duration: const Duration(seconds: 3),
+                          );
+                        }
                       },
                       direction: DismissDirection.horizontal,
                       // Show a red background as the item is being swiped away
