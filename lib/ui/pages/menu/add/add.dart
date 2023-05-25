@@ -11,7 +11,7 @@ import '../../../widgets/Input.dart';
 import '../../../widgets/colorPicker.dart';
 
 class Add extends StatefulWidget {
-  const Add({super.key});
+  const Add({Key? key}) : super(key: key);
 
   @override
   State<Add> createState() => _AddState();
@@ -25,6 +25,7 @@ class _AddState extends State<Add> {
   ClothesController addController = ClothesController();
   Color currentColor = Colors.red;
   File? selectedImage;
+  bool _isLoading = false;
 
   void changeColor(Color color) {
     setState(() => currentColor = color);
@@ -33,6 +34,17 @@ class _AddState extends State<Add> {
   void _onImageSelected(File image) {
     setState(() {
       selectedImage = image;
+    });
+  }
+
+  void _resetFields() {
+    modelController.clear();
+    sizeController.clear();
+    availabilityController.clear();
+    providerController.clear();
+    selectedImage = null;
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -47,7 +59,7 @@ class _AddState extends State<Add> {
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(1000, 198, 169, 95),
+            color: Color.fromARGB(1000, 198, 169, 95),
           ),
         ),
         const SizedBox(height: 40),
@@ -130,14 +142,19 @@ class _AddState extends State<Add> {
         ),
         ElevatedButton(
           onPressed: () {
+            setState(() {
+              _isLoading = true;
+            });
+
             Clothes clothes = Clothes(
-                model: modelController.text,
-                size: sizeController.text,
-                availability: availabilityController.text,
-                supplier: providerController.text,
-                color:
-                    "Color(0x${currentColor.value.toRadixString(16).padLeft(8, '0')})",
-                image: selectedImage);
+              model: modelController.text,
+              size: sizeController.text,
+              availability: availabilityController.text,
+              supplier: providerController.text,
+              color:
+                  "Color(0x${currentColor.value.toRadixString(16).padLeft(8, '0')})",
+              image: selectedImage,
+            );
 
             addController.SaveClothes(clothes).then((value) {
               if (value == 'Se ha Registrado Correctamente') {
@@ -147,8 +164,10 @@ class _AddState extends State<Add> {
                   snackPosition: SnackPosition.TOP,
                   backgroundColor: Colors.green,
                   colorText: Colors.white,
-                  duration: Duration(seconds: 3),
+                  duration: const Duration(seconds: 3),
                 );
+
+                _resetFields(); // Reiniciar los campos después de guardar correctamente
               } else {
                 Get.snackbar(
                   'Validacion de datos',
@@ -156,25 +175,32 @@ class _AddState extends State<Add> {
                   snackPosition: SnackPosition.TOP,
                   backgroundColor: Colors.red,
                   colorText: Colors.white,
-                  duration: Duration(seconds: 3),
+                  duration: const Duration(seconds: 3),
                 );
+
+                setState(() {
+                  _isLoading = false;
+                });
               }
             });
           },
           style: ElevatedButton.styleFrom(
             primary: const Color.fromARGB(1000, 198, 169, 95),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
             ),
             minimumSize: Size(Dimensions.width90, Dimensions.buttonheight2),
           ),
-          child: Text("Guardar",
-              style: GoogleFonts.robotoFlex(
-                color: Colors.black,
-                fontSize: 15,
-              )
-          ),
-        )
+          child: _isLoading
+              ? const CircularProgressIndicator() // Mostrar la barra de progreso
+              : Text(
+                  "Guardar",
+                  style: GoogleFonts.robotoFlex(
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
+                ),
+        ),
       ],
     );
   }

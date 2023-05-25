@@ -76,13 +76,14 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                       key: Key(clothesItem["model"]),
                       onDismissed: (direction) {
                         setState(() {
+                          list.removeAt(index); // Remove the item from the list
                           controller.DeleteClothes(itemName);
                         });
                         Get.snackbar(
                           'Validacion de datos',
-                          'No se ha Registrado correctamente',
+                          'Se ha borrando con exito',
                           snackPosition: SnackPosition.TOP,
-                          backgroundColor: Colors.red,
+                          backgroundColor: Colors.green,
                           colorText: Colors.white,
                           duration: const Duration(seconds: 3),
                         );

@@ -21,7 +21,5 @@ class ClothesController extends GetxController {
 
   Future<String> DeleteClothes(String model) async {
     return await ClothesRequest.deleteClothes(model);
-    
-
   }
 }

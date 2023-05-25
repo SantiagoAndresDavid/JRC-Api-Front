@@ -14,61 +14,59 @@ class ImagePickerWidget extends StatefulWidget {
 class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   File? _imageFile;
 
+  Future<void> _selectImage() async {
+    final imagePicker = ImagePicker();
+    final pickedFile = await imagePicker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      final imageFile = File(pickedFile.path);
+      setState(() {
+        _imageFile = imageFile;
+      });
+      widget.onImageSelected(imageFile);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color.fromARGB(1000, 198, 169, 95),
-                  width: 3,
-                ),
-              ),
-              child: IconButton(
-                onPressed: () async {
-                  final imagePicker = ImagePicker();
-                  final pickedFile = await imagePicker.getImage(
-                    source: ImageSource.gallery,
-                  );
-
-                  if (pickedFile != null) {
-                    final imageFile = File(pickedFile.path);
-                    setState(() {
-                      _imageFile = imageFile;
-                    });
-                    widget.onImageSelected(imageFile);
-                  }
-                },
-                icon: _imageFile == null
-                    ? Icon(Icons.add_a_photo, size: 60)
-                    : SizedBox(),
-                iconSize: 60,
+        GestureDetector(
+          onTap: _selectImage,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
                 color: const Color.fromARGB(1000, 198, 169, 95),
+                width: 3,
               ),
             ),
-            if (_imageFile != null)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color.fromARGB(1000, 198, 169, 95),
-                    width: 3,
-                  ),
-                ),
-                child: SizedBox(
-                  height: 150, // Establece una altura fija para el contenedor
-                  width: 150, // Establece una anchura fija para el contenedor
-                  child: Image.file(
+            width: 150,
+            height: 150,
+            child: _imageFile != null
+                ? Image.file(
                     _imageFile!,
-                    fit: BoxFit
-                        .cover, // Ajusta la imagen para recortarla al tamaño del contenedor
+                    fit: BoxFit.cover,
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.add_a_photo,
+                        size: 60,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        'Agregar foto',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-          ],
+          ),
         ),
         const SizedBox(height: 20),
       ],
