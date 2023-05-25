@@ -71,7 +71,6 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                   itemBuilder: (BuildContext context, int index) {
                     final dynamic clothesItem = list[index];
                     var itemName = clothesItem["model"];
-
                     return Dismissible(
                       key: Key(clothesItem["model"]),
                       onDismissed: (direction) {
@@ -81,15 +80,41 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                         });
                         Get.snackbar(
                           'Validacion de datos',
-                          'Se ha borrando con exito',
+                          'Se ha borrado con éxito',
                           snackPosition: SnackPosition.TOP,
                           backgroundColor: Colors.green,
                           colorText: Colors.white,
                           duration: const Duration(seconds: 3),
                         );
                       },
-                      // Muestra un background rojo a medida que el elemento se elimina
-                      background: Container(color: Colors.red),
+                      direction: DismissDirection.horizontal,
+                      // Show a red background as the item is being swiped away
+                      background: Container(
+                        color: Colors.red,
+                        child: const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      secondaryBackground: Container(
+                        color: Colors.blue,
+                        child: const Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                       child: Container(
                         height: 100,
                         color: Colors.white,
