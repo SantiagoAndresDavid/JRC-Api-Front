@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jrc_front/ui/widgets/ClothesDetailsDialog.dart';
+import 'package:jrc_front/ui/widgets/ConfirmDialog.dart';
 
 import '../../controllers/clothes/clothesController.dart';
+// Importa el archivo del diálogo de detalles
 
 class ClothesListWidget extends StatefulWidget {
   final String? model;
@@ -16,6 +19,8 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
   ClothesController controller = ClothesController();
   List<dynamic> list = []; // Lista local
   bool isLoading = true;
+  int selectedIndex =
+      -1; // Variable para almacenar el índice del elemento seleccionado
 
   @override
   void initState() {
@@ -42,6 +47,40 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
         isLoading = false;
       });
     }
+  }
+
+  void showDetailsDialog(dynamic clothesItem) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ClothesDetailsDialog(clothesItem: clothesItem);
+      },
+    );
+  }
+
+  void showDeleteConfirmation(dynamic clothesItem, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ConfirmDialog(
+          onConfirm: () {
+            setState(() {
+              list.removeAt(index);
+              controller.DeleteClothes(clothesItem["model"]);
+            });
+            Get.snackbar(
+              'Validacion de datos',
+              'Se ha borrado con éxito',
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+              duration: const Duration(seconds: 3),
+            );
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -79,22 +118,10 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                           print(itemName);
                         } else if (direction == DismissDirection.startToEnd) {
                           // Swiped towards the right (start to end)
-                          setState(() {
-                            list.removeAt(index);
-                            controller.DeleteClothes(itemName);
-                          });
-                          Get.snackbar(
-                            'Validacion de datos',
-                            'Se ha borrado con éxito',
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white,
-                            duration: const Duration(seconds: 3),
-                          );
+                          showDeleteConfirmation(clothesItem, index);
                         }
                       },
                       direction: DismissDirection.horizontal,
-                      // Show a red background as the item is being swiped away
                       background: Container(
                         color: Colors.red,
                         child: const Align(
@@ -121,10 +148,23 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                           ),
                         ),
                       ),
-                      child: Container(
-                        height: 100,
-                        color: Colors.white,
-                        child: Center(child: Text(itemName)),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                          showDetailsDialog(clothesItem);
+                        },
+                        child: Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: selectedIndex == index
+                                ? Colors.grey.withOpacity(0.5)
+                                : Colors.white,
+                          ),
+                          child: Center(child: Text(itemName)),
+                        ),
                       ),
                     );
                   },
