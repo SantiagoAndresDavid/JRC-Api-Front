@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jrc_front/ui/widgets/ClothesDetailsDialog.dart';
-import 'package:jrc_front/ui/widgets/ConfirmDialog.dart';
 
 import '../../controllers/clothes/clothesController.dart';
-// Importa el archivo del diálogo de detalles
 
 class ClothesListWidget extends StatefulWidget {
   final String? model;
@@ -17,10 +15,9 @@ class ClothesListWidget extends StatefulWidget {
 
 class _ClothesListWidgetState extends State<ClothesListWidget> {
   ClothesController controller = ClothesController();
-  List<dynamic> list = []; // Lista local
+  List<dynamic> list = [];
   bool isLoading = true;
-  int selectedIndex =
-      -1; // Variable para almacenar el índice del elemento seleccionado
+  int selectedIndex = -1;
 
   @override
   void initState() {
@@ -58,29 +55,52 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
     );
   }
 
-  void showDeleteConfirmation(dynamic clothesItem, int index) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return ConfirmDialog(
-          onConfirm: () {
-            setState(() {
-              list.removeAt(index);
-              controller.DeleteClothes(clothesItem["model"]);
-            });
-            Get.snackbar(
-              'Validacion de datos',
-              'Se ha borrado con éxito',
-              snackPosition: SnackPosition.TOP,
-              backgroundColor: Colors.green,
-              colorText: Colors.white,
-              duration: const Duration(seconds: 3),
-            );
-            Navigator.of(context).pop();
-          },
-        );
-      },
+  Future<void> deleteItem(dynamic clothesItem, int index) async {
+    setState(() {
+      list.removeAt(index);
+      isLoading = true;
+    });
+
+    await controller.DeleteClothes(clothesItem["model"]);
+
+    await loadData();
+
+    Get.snackbar(
+      'Validacion de datos',
+      'Se ha borrado con éxito',
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      duration: const Duration(seconds: 3),
     );
+  }
+
+  Future<bool> showDeleteConfirmation() async {
+    return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Confirmar eliminación'),
+              content:
+                  Text('¿Estás seguro de que deseas eliminar este elemento?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text('Cancelar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('Aceptar'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
   }
 
   @override
@@ -114,14 +134,20 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                       key: Key(clothesItem["model"]),
                       onDismissed: (direction) {
                         if (direction == DismissDirection.endToStart) {
-                          // Swiped towards the left (end to start)
                           print(itemName);
-                        } else if (direction == DismissDirection.startToEnd) {
-                          // Swiped towards the right (start to end)
-                          showDeleteConfirmation(clothesItem, index);
                         }
                       },
                       direction: DismissDirection.horizontal,
+                      confirmDismiss: (direction) async {
+                        if (direction == DismissDirection.startToEnd) {
+                          final confirm = await showDeleteConfirmation();
+                          if (confirm) {
+                            deleteItem(clothesItem, index);
+                          }
+                          return confirm;
+                        }
+                        return false;
+                      },
                       background: Container(
                         color: Colors.red,
                         child: const Align(
