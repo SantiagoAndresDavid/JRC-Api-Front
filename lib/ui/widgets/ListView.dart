@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jrc_front/ui/widgets/ClothesDetailsDialog.dart';
+import 'package:jrc_front/ui/widgets/EditItemDialog.dart';
 
 import '../../controllers/clothes/clothesController.dart';
 
@@ -103,6 +104,15 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
         false;
   }
 
+  void editItem(dynamic clothesItem) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EditItemDialog(clothesItem: clothesItem);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -132,11 +142,6 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                     var itemName = clothesItem["model"];
                     return Dismissible(
                       key: Key(clothesItem["model"]),
-                      onDismissed: (direction) {
-                        if (direction == DismissDirection.endToStart) {
-                          print(itemName);
-                        }
-                      },
                       direction: DismissDirection.horizontal,
                       confirmDismiss: (direction) async {
                         if (direction == DismissDirection.startToEnd) {
@@ -145,6 +150,8 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                             deleteItem(clothesItem, index);
                           }
                           return confirm;
+                        } else if (direction == DismissDirection.endToStart) {
+                          editItem(clothesItem); // Llama al método de edición
                         }
                         return false;
                       },
