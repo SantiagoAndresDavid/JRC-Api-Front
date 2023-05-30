@@ -86,16 +86,26 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                   Text('¿Estás seguro de que deseas eliminar este elemento?'),
               actions: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  child: Text('Cancelar'),
-                ),
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child: const Text(
+                      'Cancelar',
+                      style: TextStyle(
+                        color: Colors.red, // Cambia el color aquí
+                      ),
+                    )),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: Text('Aceptar'),
+                  child: const Text(
+                    'Aceptar',
+                    style: TextStyle(
+                      color: Color.fromARGB(
+                          1000, 198, 169, 95), // Cambia el color aquí
+                    ),
+                  ),
                 ),
               ],
             );
