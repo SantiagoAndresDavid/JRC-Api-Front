@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:jrc_front/domain/clothes.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fs;
+import 'package:path/path.dart' as path;
 
 class ClothesRequest {
   static final fs.FirebaseStorage storage = fs.FirebaseStorage.instance;
@@ -14,7 +15,7 @@ class ClothesRequest {
 
   static Future<String> saveClothes(Clothes clothes) async {
     try {
-      var url = await uploadFile(clothes.model, clothes.image);
+      var url = await uploadFile(clothes.image);
 
       var clothesUrl = {
         'model': clothes.model,
@@ -33,26 +34,34 @@ class ClothesRequest {
     }
   }
 
-  static Future<dynamic> uploadFile(String model, File? selectedImage) async {
-    var r;
-    final path = 'Image/$model';
+  static Future<String> uploadFile(File? selectedImage) async {
+    String fileName = path.basename(selectedImage!.path);
+    final storagePath = 'Image/$fileName';
 
     try {
       final storage = FirebaseStorage.instance;
-      final ref = storage.ref().child(path);
-      final uploadTask = ref.putFile(selectedImage!);
+      final ref = storage.ref().child(storagePath);
+      final uploadTask = ref.putFile(selectedImage);
+
+      // Check if the image already exists
+      final existingSnapshot = await ref.getDownloadURL();
+      if (existingSnapshot != null) {
+        // Image already exists, return the existing download URL
+        return existingSnapshot;
+      }
+
       final snapshot = await uploadTask.whenComplete(() {});
       final urlDownload = await snapshot.ref.getDownloadURL();
-      r = urlDownload;
       log('Link de descarga: $urlDownload');
+      return urlDownload;
     } catch (error) {
       if (error is FirebaseException) {
         log('Error al subir la imagen: ${error.message}');
       } else {
         log('Error al subir la imagen: $error');
       }
+      throw error; // Re-throw the error to handle it appropriately
     }
-    return r;
   }
 
   static Future<List<dynamic>> getAllClothes() async {
@@ -83,4 +92,11 @@ class ClothesRequest {
       return 'Error: No se pudo registrar correctamente';
     }
   }
+
+  /*Future<void> updateClothe(Clothes clothes) async {
+    await _db.collection('estados').doc(id).update(cliente).catchError((e) {
+      print(e);
+    });
+    //return true;
+  }*/
 }

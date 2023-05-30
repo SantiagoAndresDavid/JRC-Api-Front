@@ -152,10 +152,9 @@ class _AddState extends State<Add> {
               availability: availabilityController.text,
               supplier: providerController.text,
               color:
-                  "Color(0x${currentColor.value.toRadixString(16).padLeft(8, '0')})",
+                  "0x${currentColor.value.toRadixString(16).padLeft(8, '0')}",
               image: selectedImage,
             );
-
             addController.SaveClothes(clothes).then((value) {
               if (value == 'Se ha Registrado Correctamente') {
                 Get.snackbar(

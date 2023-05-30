@@ -9,20 +9,20 @@ class ClothesDetailsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle titleStyle = GoogleFonts.roboto(
-      color: Color.fromARGB(1000, 198, 169, 95),
-      fontSize: 30,
-      fontWeight: FontWeight.w200,
+      color: const Color.fromARGB(1000, 198, 169, 95),
+      fontSize: 25,
+      fontWeight: FontWeight.w400,
     );
 
     TextStyle resultStyle = GoogleFonts.roboto(
       color: Colors.black,
       fontSize: 18,
-      fontWeight: FontWeight.w200,
+      fontWeight: FontWeight.w400,
     );
 
     Widget buildDivider() {
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Row(
           children: [
             Expanded(
@@ -31,7 +31,7 @@ class ClothesDetailsDialog extends StatelessWidget {
                 thickness: 1,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 5),
             Text(
               '• • • •',
               style: TextStyle(
@@ -40,7 +40,7 @@ class ClothesDetailsDialog extends StatelessWidget {
                 fontWeight: FontWeight.w200,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 5),
             Expanded(
               child: Divider(
                 color: Colors.grey[300],
@@ -55,8 +55,8 @@ class ClothesDetailsDialog extends StatelessWidget {
     return Dialog(
       insetPadding: EdgeInsets.zero,
       child: Container(
-        constraints: BoxConstraints(
-          maxWidth: 350.0,
+        constraints: const BoxConstraints(
+          maxWidth: 355.0,
           maxHeight: 640.0,
         ),
         padding: EdgeInsets.all(5),
@@ -70,8 +70,8 @@ class ClothesDetailsDialog extends StatelessWidget {
             Flexible(
               fit: FlexFit.tight,
               child: Container(
-                padding: EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(bottom: 20),
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                   color: Color.fromARGB(1000, 240, 240, 240),
                 ),
@@ -91,7 +91,7 @@ class ClothesDetailsDialog extends StatelessWidget {
                         style: GoogleFonts.roboto(
                           color: Colors.black,
                           fontSize: 20,
-                          fontWeight: FontWeight.w200,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -99,7 +99,7 @@ class ClothesDetailsDialog extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -148,29 +148,47 @@ class ClothesDetailsDialog extends StatelessWidget {
               ),
             ),
             buildDivider(),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                Text(
-                  'Color: ',
-                  style: titleStyle,
-                ),
-                SizedBox(width: 10),
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xfffae9e8),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Proveedor: ',
+                    style: titleStyle,
+                    children: [
+                      TextSpan(
+                        text: clothesItem['supplier'],
+                        style: resultStyle,
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
             buildDivider(),
-            SizedBox(height: 20),
+            Expanded(
+              child: Row(
+                children: [
+                  Text(
+                    'Color: ',
+                    style: titleStyle,
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(int.parse(clothesItem['color'])),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            buildDivider(),
             Container(
               width: 150,
-              height: 150,
+              height: 180,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black, width: 2.5),
               ),
