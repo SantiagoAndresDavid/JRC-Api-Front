@@ -18,6 +18,7 @@ class ClothesRequest {
       var url = await uploadFile(clothes.image);
 
       var clothesUrl = {
+        'id': clothes.id,
         'model': clothes.model,
         'size': clothes.size,
         'availability': clothes.availability,
@@ -26,7 +27,7 @@ class ClothesRequest {
         'image': url.toString(),
       };
 
-      await _db.collection('Clothes').doc(clothes.model).set(clothesUrl);
+      await _db.collection('Clothes').doc(clothes.id).set(clothesUrl);
 
       return 'Se ha Registrado Correctamente';
     } catch (e) {
@@ -35,30 +36,25 @@ class ClothesRequest {
   }
 
   static Future<String> uploadFile(File? selectedImage) async {
-    String fileName = path.basename(selectedImage!.path);
-    final storagePath = 'Image/$fileName';
+    if (selectedImage == null) {
+      throw Exception('No se ha seleccionado ninguna imagen.');
+    }
 
+    String fileName = path.basename(selectedImage.path);
+    final storagePath = 'Image/$fileName';
     try {
       final storage = FirebaseStorage.instance;
       final ref = storage.ref().child(storagePath);
       final uploadTask = ref.putFile(selectedImage);
-
-      // Check if the image already exists
-      final existingSnapshot = await ref.getDownloadURL();
-      if (existingSnapshot != null) {
-        // Image already exists, return the existing download URL
-        return existingSnapshot;
-      }
-
       final snapshot = await uploadTask.whenComplete(() {});
       final urlDownload = await snapshot.ref.getDownloadURL();
-      log('Link de descarga: $urlDownload');
+      print('Link de descarga: $urlDownload');
       return urlDownload;
     } catch (error) {
       if (error is FirebaseException) {
-        log('Error al subir la imagen: ${error.message}');
+        print('Error al subir la imagen: ${error.message}');
       } else {
-        log('Error al subir la imagen: $error');
+        print('Error al subir la imagen: $error');
       }
       throw error; // Re-throw the error to handle it appropriately
     }
@@ -70,6 +66,7 @@ class ClothesRequest {
     var response = await _db.collection("Clothes").get();
     response.docs.forEach((doc) {
       var clothesUrl = {
+        'id': doc.data()['id'],
         'model': doc.data()['model'],
         'size': doc.data()['size'],
         'availability': doc.data()['availability'],
@@ -84,19 +81,32 @@ class ClothesRequest {
     return clothesList;
   }
 
-  static Future<String> deleteClothes(String model) async {
+  static Future<String> deleteClothes(String id) async {
     try {
-      await _db.collection('Clothes').doc(model).delete();
+      await _db.collection('Clothes').doc(id).delete();
       return 'Se ha Borrado correctamente';
     } catch (e) {
       return 'Error: No se pudo registrar correctamente';
     }
   }
 
-  /*Future<void> updateClothe(Clothes clothes) async {
-    await _db.collection('estados').doc(id).update(cliente).catchError((e) {
-      print(e);
-    });
-    //return true;
-  }*/
+  static Future<String> updateClothes(Clothes clothes) async {
+    try {
+      var url = await uploadFile(clothes.image);
+
+      var clothesUrl = {
+        'id': clothes.id,
+        'model': clothes.model,
+        'size': clothes.size,
+        'availability': clothes.availability,
+        'supplier': clothes.supplier,
+        'color': clothes.color,
+        'image': url.toString(),
+      };
+      await _db.collection('Clothes').doc(clothes.id).update(clothesUrl);
+      return 'Se ha Actualizado Correctamente';
+    } catch (e) {
+      return 'Error: No se pudo Actualizar correctamente';
+    }
+  }
 }

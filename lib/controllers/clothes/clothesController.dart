@@ -19,10 +19,16 @@ class ClothesController extends GetxController {
     return await ClothesRequest.getAllClothes();
   }
 
-  Future<String> DeleteClothes(String model) async {
-    return await ClothesRequest.deleteClothes(model);
+  Future<String> DeleteClothes(String id) async {
+    return await ClothesRequest.deleteClothes(id);
   }
 
-
-  
+  Future<String> UpdateClothes(Clothes clothes) async {
+    try {
+      String response = await ClothesRequest.updateClothes(clothes);
+      return response;
+    } on FirebaseException catch (e) {
+      return e.toString();
+    }
+  }
 }

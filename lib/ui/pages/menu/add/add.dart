@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,6 +49,11 @@ class _AddState extends State<Add> {
     });
   }
 
+String generateRandomString(int len) {
+  var r = Random();
+  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+}
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -147,6 +153,7 @@ class _AddState extends State<Add> {
             });
 
             Clothes clothes = Clothes(
+              id: generateRandomString(15),
               model: modelController.text,
               size: sizeController.text,
               availability: availabilityController.text,
@@ -176,7 +183,6 @@ class _AddState extends State<Add> {
                   colorText: Colors.white,
                   duration: const Duration(seconds: 3),
                 );
-
                 setState(() {
                   _isLoading = false;
                 });

@@ -114,11 +114,25 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
         false;
   }
 
-  void editItem(dynamic clothesItem) {
-    showDialog(
+  Future<void> editItem(dynamic clothesItem) async {
+    bool? result = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return EditItemDialog(clothesItem: clothesItem);
+        return EditItemDialog(
+          clothesItem: clothesItem,
+          onConfirm: (bool value) {
+            if (value) {
+              Get.snackbar(
+                'Validacion de datos',
+                'Se ha borrado con éxito',
+                snackPosition: SnackPosition.TOP,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+                duration: const Duration(seconds: 3),
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -149,9 +163,9 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                   itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) {
                     final dynamic clothesItem = list[index];
-                    var itemName = clothesItem["model"];
+                    var itemName = clothesItem["id"];
                     return Dismissible(
-                      key: Key(clothesItem["model"]),
+                      key: Key(clothesItem["id"]),
                       direction: DismissDirection.horizontal,
                       confirmDismiss: (direction) async {
                         if (direction == DismissDirection.startToEnd) {
@@ -161,7 +175,7 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                           }
                           return confirm;
                         } else if (direction == DismissDirection.endToStart) {
-                          editItem(clothesItem); // Llama al método de edición
+                          editItem(clothesItem);
                         }
                         return false;
                       },
