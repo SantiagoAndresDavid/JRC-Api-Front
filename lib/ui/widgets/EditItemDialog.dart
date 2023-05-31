@@ -20,7 +20,7 @@ class EditItemDialog extends StatefulWidget {
 }
 
 class _EditItemDialogState extends State<EditItemDialog> {
-  bool isLoading = true;
+  bool isLoading = false; // Cambiamos el valor inicial a false
   late TextEditingController modelController;
   late TextEditingController sizeController;
   late TextEditingController availabilityController;
@@ -42,21 +42,43 @@ class _EditItemDialogState extends State<EditItemDialog> {
         TextEditingController(text: widget.clothesItem['supplier']);
     currentColor = Color(int.parse(widget.clothesItem['color']));
     selectedImage = File(widget.clothesItem['image']);
-    Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        isLoading = false;
-      });
-    });
   }
 
   void changeColor(Color color) {
     setState(() => currentColor = color);
   }
 
-  void _onImageSelected(File image) {
+  void _onImageSelected(File? image) {
     setState(() {
       selectedImage = image;
     });
+  }
+
+  void updateClothes() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    Clothes clothes = Clothes(
+      id: widget.clothesItem['id'],
+      model: modelController.text,
+      size: sizeController.text,
+      availability: availabilityController.text,
+      supplier: supplierController.text,
+      color: "0x${currentColor.value.toRadixString(16).padLeft(8, '0')}",
+      image: selectedImage,
+    );
+
+    String value = await controller.UpdateClothes(clothes);
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (value == 'Se ha Actualizado Correctamente') {
+      Navigator.of(context).pop();
+      widget.onConfirm(true);
+    }
   }
 
   @override
@@ -66,7 +88,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
       content: SingleChildScrollView(
         child: SizedBox(
           height: 560,
-          width: 350, // Tamaño personalizado
+          width: 350,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -79,7 +101,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
                 const Color.fromARGB(255, 197, 197, 197),
                 Colors.black,
               ),
-              const SizedBox(height: 16), // Espacio entre los campos de entrada
+              const SizedBox(height: 16),
               Input(
                 false,
                 sizeController,
@@ -89,7 +111,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
                 const Color.fromARGB(255, 197, 197, 197),
                 Colors.black,
               ),
-              const SizedBox(height: 16), // Espacio entre los campos de entrada
+              const SizedBox(height: 16),
               Input(
                 false,
                 availabilityController,
@@ -99,7 +121,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
                 const Color.fromARGB(255, 197, 197, 197),
                 Colors.black,
               ),
-              const SizedBox(height: 16), // Espacio entre los campos de entrada
+              const SizedBox(height: 16),
               Input(
                 false,
                 supplierController,
@@ -109,7 +131,6 @@ class _EditItemDialogState extends State<EditItemDialog> {
                 const Color.fromARGB(255, 197, 197, 197),
                 Colors.black,
               ),
-
               SizedBox(
                 width: 180,
                 child: ColorPickerWidget(
@@ -121,7 +142,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
               SizedBox(
                 width: 160,
                 height: 170,
-                child: ImagePickerWidget(onImageSelected: _onImageSelected),
+                child: ImagePickerWidget(onImageSelected: (File? image) {
+                  _onImageSelected(image!);
+                }),
               ),
             ],
           ),
@@ -135,25 +158,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
           child: Text('Cancelar'),
         ),
         TextButton(
-          onPressed: () {
-            Clothes clothes = Clothes(
-              id: widget.clothesItem['id'],
-              model: modelController.text,
-              size: sizeController.text,
-              availability: availabilityController.text,
-              supplier: supplierController.text,
-              color:
-                  "0x${currentColor.value.toRadixString(16).padLeft(8, '0')}",
-              image: selectedImage,
-            );
-            controller.UpdateClothes(clothes).then((value) {
-              if (value == 'Se ha Actualizado Correctamente') {
-                Navigator.of(context).pop();
-                widget.onConfirm(true);
-              }
-            });
-          },
-          child: Text('Confirmar'),
+          onPressed: isLoading ? null : updateClothes,
+          child: isLoading ? CircularProgressIndicator() : Text('Confirmar'),
         ),
       ],
     );

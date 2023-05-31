@@ -32,9 +32,9 @@ class _AddState extends State<Add> {
     setState(() => currentColor = color);
   }
 
-  void _onImageSelected(File image) {
+  void _onImageSelected(File? image) {
     setState(() {
-      selectedImage = image;
+      selectedImage = image!;
     });
   }
 
@@ -49,11 +49,14 @@ class _AddState extends State<Add> {
     });
   }
 
-String generateRandomString(int len) {
-  var r = Random();
-  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
-}
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -141,7 +144,9 @@ String generateRandomString(int len) {
               const SizedBox(width: 10),
               SizedBox(
                 width: 160,
-                child: ImagePickerWidget(onImageSelected: _onImageSelected),
+                child: ImagePickerWidget(onImageSelected: (File? image) {
+                  _onImageSelected(image!);
+                }),
               ),
             ],
           ),

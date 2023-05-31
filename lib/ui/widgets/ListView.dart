@@ -62,7 +62,7 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
       isLoading = true;
     });
 
-    await controller.DeleteClothes(clothesItem["model"]);
+    await controller.DeleteClothes(clothesItem["id"]);
 
     await loadData();
 
