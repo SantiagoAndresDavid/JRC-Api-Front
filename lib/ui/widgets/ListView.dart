@@ -86,15 +86,16 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                   Text('¿Estás seguro de que deseas eliminar este elemento?'),
               actions: [
                 TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text(
-                      'Cancelar',
-                      style: TextStyle(
-                        color: Colors.red, // Cambia el color aquí
-                      ),
-                    )),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text(
+                    'Cancelar',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
@@ -102,8 +103,7 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                   child: const Text(
                     'Aceptar',
                     style: TextStyle(
-                      color: Color.fromARGB(
-                          1000, 198, 169, 95), // Cambia el color aquí
+                      color: Color.fromARGB(1000, 198, 169, 95),
                     ),
                   ),
                 ),
@@ -120,16 +120,17 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
       builder: (BuildContext context) {
         return EditItemDialog(
           clothesItem: clothesItem,
-          onConfirm: (bool value) {
+          onConfirm: (bool value) async {
             if (value) {
               Get.snackbar(
                 'Validacion de datos',
-                'Se ha borrado con éxito',
+                'Se ha actualizado con éxito',
                 snackPosition: SnackPosition.TOP,
                 backgroundColor: Colors.green,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 3),
               );
+              await loadData(); // Update the list after confirming the edit
             }
           },
         );
