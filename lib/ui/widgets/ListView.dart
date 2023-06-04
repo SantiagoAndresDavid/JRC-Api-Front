@@ -217,9 +217,7 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                           height: 150,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
-                            color: selectedIndex == index
-                                ? Colors.grey.withOpacity(0.5)
-                                : Colors.white,
+                            color: const Color.fromARGB(255, 197, 197, 197),
                           ),
                           child: Row(
                             children: [

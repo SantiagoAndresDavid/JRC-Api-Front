@@ -9,9 +9,10 @@ import '../../widgets/Input.dart';
 import '../../widgets/appBar.dart';
 import '../../widgets/appIcon.dart';
 import 'add/add.dart';
+import '../auth/login.dart'; // Import the login page
 
 class Menu extends StatefulWidget {
-  const Menu({super.key});
+  const Menu({Key? key});
 
   @override
   State<Menu> createState() => _MenuState();
@@ -61,22 +62,6 @@ class _MenuState extends State<Menu> {
         child: const Search(),
       ),
     ),
-    AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return ScaleTransition(
-          scale: animation,
-          child: child,
-        );
-      },
-      child: Container(
-        key: const ValueKey<int>(4),
-        child: const Text(
-          'Index 4: Person',
-          style: optionStyle,
-        ),
-      ),
-    ),
   ];
 
   void _onItemTapped(int index) {
@@ -85,55 +70,94 @@ class _MenuState extends State<Menu> {
     });
   }
 
+  void _logout() {
+    // Add your logout logic here
+    Get.off(() => Login());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Positioned(
+      body: Stack(
+        children: [
+          Positioned(
             top: 10,
             left: 0,
             right: 250,
             child: Container(
-                height: Dimensions.height15,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
+              height: Dimensions.height15,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
                   image: AssetImage('assets/images/logo.png'),
-                )))),
-        Positioned(
+                ),
+              ),
+            ),
+          ),
+          Positioned(
             width: Dimensions.screenWidth,
             top: Dimensions.height13,
             height: Dimensions.screenHeight,
             child: SizedBox(
-                height: Dimensions.width90,
-                //color: Color.fromRGBO(33, 150, 243, 1),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: _widgetOptions.elementAt(_selectedIndex),
-                )))
-      ]),
+              height: Dimensions.width90,
+              //color: Color.fromRGBO(33, 150, 243, 1),
+              child: Align(
+                alignment: Alignment.center,
+                child: _widgetOptions.elementAt(_selectedIndex),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 40,
+            right: 10,
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Logout'),
+                      content: const Text('Are you sure you want to logout?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: _logout,
+                          child: const Text('Logout'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(1000, 198, 169, 95),
+                ),
+                child: const Icon(Icons.logout),
+              ),
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.query_stats),
-            label: 'stats',
+            label: 'Stats',
             backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: 'Add',
           ),
-          /*BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Person',
-          )
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: const Color.fromARGB(1000, 198, 169, 95),
