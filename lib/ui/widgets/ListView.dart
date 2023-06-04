@@ -214,14 +214,69 @@ class _ClothesListWidgetState extends State<ClothesListWidget> {
                           showDetailsDialog(clothesItem);
                         },
                         child: Container(
-                          height: 100,
+                          height: 150,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             color: selectedIndex == index
                                 ? Colors.grey.withOpacity(0.5)
                                 : Colors.white,
                           ),
-                          child: Center(child: Text(itemName)),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color.fromARGB(1000, 198, 169, 95),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Image.network(
+                                  clothesItem['image'],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Modelo: ' + clothesItem['model'],
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    'Disponibilidad: ' +
+                                        clothesItem['availability'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    'Proveedor: ' + clothesItem['supplier'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

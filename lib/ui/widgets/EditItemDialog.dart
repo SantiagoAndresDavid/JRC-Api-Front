@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:jrc_front/ui/widgets/ImagePicker.dart';
 import '../../controllers/clothes/clothesController.dart';
 import '../../domain/clothes.dart';
@@ -20,15 +21,14 @@ class EditItemDialog extends StatefulWidget {
 }
 
 class _EditItemDialogState extends State<EditItemDialog> {
-  bool isLoading = false; // Cambiamos el valor inicial a false
+  bool isLoading = false;
   late TextEditingController modelController;
   late TextEditingController sizeController;
   late TextEditingController availabilityController;
   late TextEditingController supplierController;
-  late Color currentColor = Colors.red;
-  late File? selectedImage;
+  late Color currentColor;
+  File? selectedImage;
   late ClothesController controller;
-  bool? dialogResult;
 
   @override
   void initState() {
@@ -41,7 +41,22 @@ class _EditItemDialogState extends State<EditItemDialog> {
     supplierController =
         TextEditingController(text: widget.clothesItem['supplier']);
     currentColor = Color(int.parse(widget.clothesItem['color']));
-    selectedImage = File(widget.clothesItem['image']);
+    selectedImage = null;
+
+    downloadImage(widget.clothesItem['image']).then((file) {
+      setState(() {
+        selectedImage = file;
+      });
+    });
+  }
+
+  Future<File> downloadImage(String url) async {
+    final response = await http.get(Uri.parse(url));
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/image.jpg';
+    final file = File(filePath);
+    await file.writeAsBytes(response.bodyBytes);
+    return file;
   }
 
   void changeColor(Color color) {
@@ -142,9 +157,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
               SizedBox(
                 width: 160,
                 height: 170,
-                child: ImagePickerWidget(onImageSelected: (File? image) {
-                  _onImageSelected(image!);
-                }),
+                child: ImagePickerWidget(
+                    onImageSelected: _onImageSelected,
+                    initialImageFile: selectedImage),
               ),
             ],
           ),

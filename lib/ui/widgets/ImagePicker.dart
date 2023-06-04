@@ -5,8 +5,10 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerWidget extends StatefulWidget {
   final void Function(File? image)? onImageSelected;
   final File? initialImageFile;
+  final String? initialImageUrl;
 
-  ImagePickerWidget({this.onImageSelected, this.initialImageFile});
+  ImagePickerWidget(
+      {this.onImageSelected, this.initialImageFile, this.initialImageUrl});
 
   @override
   _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
@@ -14,11 +16,13 @@ class ImagePickerWidget extends StatefulWidget {
 
 class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   late File? _imageFile;
+  String? _imageFileUrl;
 
   @override
   void initState() {
     super.initState();
     _imageFile = widget.initialImageFile;
+    _imageFileUrl = widget.initialImageUrl;
   }
 
   Future<void> _selectImage() async {
@@ -31,6 +35,8 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       final imageFile = File(pickedFile.path);
       setState(() {
         _imageFile = imageFile;
+        _imageFileUrl =
+            null; // Clear the image URL if an image file is selected
       });
       if (widget.onImageSelected != null) {
         widget.onImageSelected!(imageFile);
@@ -58,23 +64,28 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                     _imageFile!,
                     fit: BoxFit.cover,
                   )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.add_a_photo,
-                        size: 60,
-                        color: Colors.grey,
+                : _imageFileUrl != null
+                    ? Image.network(
+                        _imageFileUrl!,
+                        fit: BoxFit.cover,
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.add_a_photo,
+                            size: 60,
+                            color: Colors.grey,
+                          ),
+                          Text(
+                            'Agregar foto',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Agregar foto',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
           ),
         ),
         const SizedBox(height: 20),
